@@ -1,24 +1,15 @@
 import React, { useState } from "react";
 import "../style/booking.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Dropdown from "react-dropdown-select";
 import { BiBaseball } from "react-icons/bi";
-import { TbCalendarTime } from "react-icons/tb";
 import { LuArmchair } from "react-icons/lu";
 
-const CustomDatePicker = React.forwardRef(({ value, onClick }, ref) => (
-  <div className="custom-datepicker" onClick={onClick} ref={ref}>
-    <span className="datepicker-value">{value || "날짜를 선택하세요"}</span>
-  </div>
-));
-
 const TicketBooking = () => {
-  const tickets = ["티켓1", "티켓2", "티켓3"];
+  const tickets = ["티켓"];
   const seatSections = [
     {
-      value: "일반좌석",
-      label: "일반좌석",
+      value: "구역",
+      label: "구역",
       options: [
         { value: "켈리존 (VIP석)", label: "켈리존 (VIP석)" },
         { value: "1루 테이블석", label: "1루 테이블석" },
@@ -30,50 +21,49 @@ const TicketBooking = () => {
         { value: "1루 와야지정석", label: "1루 와야지정석" },
       ],
     },
-    {
-      value: "휠체어석",
-      label: "휠체어석",
-      options: [
-        { value: "중앙 네이비석", label: "중앙 네이비석" },
-        {
-          value: "1루 레드 휠체어석 (동반 가능)",
-          label: "1루 레드 휠체어석 (동반 가능)",
-        },
-        {
-          value: "1루 레드 휠체어석 (동반 불가)",
-          label: "1루 레드 휠체어석 (동반 불가)",
-        },
-        { value: "3루 블루 휠체어석", label: "3루 블루 휠체어석" },
-        {
-          value: "3루 레드 휠체어석 (동반 가능)",
-          label: "3루 레드 휠체어석 (동반 가능)",
-        },
-        {
-          value: "3루 레드 휠체어석 (동반 불가)",
-          label: "3루 레드 휠체어석 (동반 불가)",
-        },
-      ],
-    },
-    {
-      value: "시야방해석",
-      label: "시야방해석",
-      options: [
-        { value: "1루 블루석_시야방해", label: "1루 블루석_시야방해" },
-        { value: "1루 FILA 존_시야방해", label: "1루 FILA 존_시야방해" },
-        { value: "1루 레드석_시야방해", label: "1루 레드석_시야방해" },
-        { value: "1루 네이비석_시야방해", label: "1루 네이비석_시야방해" },
-        { value: "1루 와야지정석_시야방해", label: "1루 와야지정석_시야방해" },
-        { value: "3루 블루석_시야방해", label: "3루 블루석_시야방해" },
-        { value: "3루 오렌지석_시야방해", label: "3루 오렌지석_시야방해" },
-        { value: "3루 레드석_시야방해", label: "3루 레드석_시야방해" },
-        { value: "3루 네이비석_시야방해", label: "3루 네이비석_시야방해" },
-        { value: "3루 와야지정석_시야방해", label: "3루 와야지정석_시야방해" },
-      ],
-    },
+    // {
+    //   value: "휠체어석",
+    //   label: "휠체어석",
+    //   options: [
+    //     { value: "중앙 네이비석", label: "중앙 네이비석" },
+    //     {
+    //       value: "1루 레드 휠체어석 (동반 가능)",
+    //       label: "1루 레드 휠체어석 (동반 가능)",
+    //     },
+    //     {
+    //       value: "1루 레드 휠체어석 (동반 불가)",
+    //       label: "1루 레드 휠체어석 (동반 불가)",
+    //     },
+    //     { value: "3루 블루 휠체어석", label: "3루 블루 휠체어석" },
+    //     {
+    //       value: "3루 레드 휠체어석 (동반 가능)",
+    //       label: "3루 레드 휠체어석 (동반 가능)",
+    //     },
+    //     {
+    //       value: "3루 레드 휠체어석 (동반 불가)",
+    //       label: "3루 레드 휠체어석 (동반 불가)",
+    //     },
+    //   ],
+    // },
+    // {
+    //   value: "시야방해석",
+    //   label: "시야방해석",
+    //   options: [
+    //     { value: "1루 블루석_시야방해", label: "1루 블루석_시야방해" },
+    //     { value: "1루 FILA 존_시야방해", label: "1루 FILA 존_시야방해" },
+    //     { value: "1루 레드석_시야방해", label: "1루 레드석_시야방해" },
+    //     { value: "1루 네이비석_시야방해", label: "1루 네이비석_시야방해" },
+    //     { value: "1루 와야지정석_시야방해", label: "1루 와야지정석_시야방해" },
+    //     { value: "3루 블루석_시야방해", label: "3루 블루석_시야방해" },
+    //     { value: "3루 오렌지석_시야방해", label: "3루 오렌지석_시야방해" },
+    //     { value: "3루 레드석_시야방해", label: "3루 레드석_시야방해" },
+    //     { value: "3루 네이비석_시야방해", label: "3루 네이비석_시야방해" },
+    //     { value: "3루 와야지정석_시야방해", label: "3루 와야지정석_시야방해" },
+    //   ],
+    // },
   ];
 
   const [selectedTicket, setSelectedTicket] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSection, setSelectedSection] = useState(null);
   const [selectedSeat, setSelectedSeat] = useState(null);
   const [activeTab, setActiveTab] = useState(1);
@@ -92,7 +82,7 @@ const TicketBooking = () => {
   };
 
   const handleBooking = () => {
-    if (selectedTicket && selectedDate && selectedSeat) {
+    if (selectedTicket && selectedSeat) {
       console.log("Booking Confirmed!");
     } else {
       console.log("Please select all options!");
@@ -110,13 +100,6 @@ const TicketBooking = () => {
         </button>
       </div>
 
-      <div className="image-container">
-        <img
-          src="https://doosanbears.com/resources/commons/images/ground.jpg"
-          alt="잠실야구경기장"
-          className="background-image"
-        />
-      </div>
       <div className="ticket-booking">
         {activeTab === 1 && (
           <>
@@ -137,21 +120,6 @@ const TicketBooking = () => {
                       <p>{ticket}</p>
                     </div>
                   ))}
-                </div>
-              </div>
-              <div className="section">
-                <h2 className="section-title">
-                  <TbCalendarTime className="section-icon" />
-                  날짜
-                </h2>
-                <div className="date-picker">
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    customInput={<CustomDatePicker />}
-                    dateFormat="yyyy/MM/dd"
-                    className="custom-datepicker"
-                  />
                 </div>
               </div>
             </div>
