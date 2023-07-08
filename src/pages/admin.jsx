@@ -5,6 +5,7 @@ import { AppContext } from '../App';
 const AdminPage = () => {
   const [raffle, setRaffle] = useState();
   const [Goods_url, setUrl] = useState('');
+  const [Goods_name , setName ] = useState('상품 이름') ;
   const { contract, web3 } = useContext(AppContext);
 
   // await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
@@ -55,17 +56,22 @@ const AdminPage = () => {
     try {
       e.preventDefault();
 
-      console.log('create') ;
       let start_block = await web3.eth.getBlockNumber();
       start_block = Number(start_block);
+
+      console.log( Goods_name , Goods_url);
 
       //console.log('f_s_b', start_block, typeof start_block);
 
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/raffle/`, {
-        URL: Goods_url,
+        name : Goods_name,
+        url: Goods_url,
         start_block,
       });
       
+      
+      console.log('create') ;
+
       get_Raffle_Data();
     } catch (error) {
       console.error(error);
@@ -107,7 +113,7 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <div className="w-[390px] h-[844px] rounded-[30px] relative text-white">
+    <div className="w-[390px] h-[844px] rounded-[30px] relative text-black">
       <div className="flex flex-col justify-center items-center">
         <form onSubmit={create}>
           <input
@@ -115,6 +121,12 @@ const AdminPage = () => {
             type="text"
             value={Goods_url}
             onChange={(e) => setUrl(e.target.value)}
+          />
+          <input
+            className="text-black"
+            type="text"
+            value={Goods_name}
+            onChange={(e) => setName(e.target.value)}
           />
           <button className="p-2 m-2">래플 생성</button>
         </form>
