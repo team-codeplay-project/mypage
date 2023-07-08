@@ -1,4 +1,5 @@
 import React from "react";
+import { createContext, useEffect, useState } from "react";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/footer";
@@ -6,15 +7,68 @@ import Header from "./components/header";
 import StatusBar from "./components/statusbar";
 import EventPage from "./pages/Event";
 import Homepage from "./pages/Home";
-import ReactPlayer from "react-player";
+// import ReactPlayer from "react-player";
 import Mypage from "./pages/Mypage";
 import Ticket from "./pages/Ticket";
+import AdminPage from "./pages/Admin";
+import { b_abi, b_addr } from "./raffletest.config";
+import Web3 from "web3";
+
+export const AppContext = createContext();
 
 function App() {
+  const [account, setAccount] = useState("");
+  const [logIn, setLogIn] = useState(false);
+
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(b_abi, b_addr);
+
+  const connect = async () => {
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      setAccount(accounts[0]);
+      setLogIn(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const chkchainID = async () => {
+    try {
+      const id = await window.ethereum.request({
+        method: "eth_chainId",
+        params: [],
+      });
+
+      if (id !== 0x5) {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            {
+              chainId: "0x5",
+            },
+          ],
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    connect();
+    chkchainID();
+  }, []);
+
   return (
-    <BrowserRouter>
-      <div>
-        {/* <div className="full-background">
+    <AppContext.Provider
+      value={{ account, connect, chkchainID, logIn, contract, web3 }}>
+      <BrowserRouter>
+        <div>
+          {/* <div className="full-background">
           <ReactPlayer
             url="/Videos/Noise.mp4"
             playing={true}
@@ -28,19 +82,21 @@ function App() {
             }}
           />
         </div> */}
-        <div className="iphone-container">
-          <StatusBar />
-          <Header />
-          <Routes>
-            <Route exact path="/" element={<Homepage />} />
-            <Route path="/Ticket" element={<Ticket />} />
-            <Route path="/Event" element={<EventPage />} />
-            <Route path="/Mypage" element={<Mypage />} />
-          </Routes>
-          <Footer />
+          <div className="iphone-container">
+            <StatusBar />
+            <Header />
+            <Routes>
+              <Route exact path="/" element={<Homepage />} />
+              <Route path="/Ticket" element={<Ticket />} />
+              <Route path="/Event" element={<EventPage />} />
+              <Route path="/Mypage" element={<Mypage />} />
+              <Route path="/AdminPage" element={<AdminPage />} />
+            </Routes>
+            <Footer />
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 

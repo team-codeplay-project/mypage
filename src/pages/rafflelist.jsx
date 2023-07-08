@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Rafflelist = () => {
   const [raffle, setRaffle] = useState();
@@ -39,15 +39,13 @@ const Rafflelist = () => {
         <div className="flex flex-col justify-center items-center">
           <div>
             <button
-              className={`p-2 rounded ${!toggle ? 'bg-yellow-400' : ''}`}
-              onClick={ing}
-            >
+              className={`p-2 rounded ${!toggle ? "bg-yellow-400" : ""}`}
+              onClick={ing}>
               진행 중
             </button>
             <button
-              className={`p-2 rounded ${toggle ? 'bg-red-400' : ''}`}
-              onClick={end}
-            >
+              className={`p-2 rounded ${toggle ? "bg-red-400" : ""}`}
+              onClick={end}>
               완료
             </button>
 

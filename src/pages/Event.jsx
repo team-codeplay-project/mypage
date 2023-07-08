@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../style/rafflebox.css";
+import ProductCard from "../components/productcard";
 // import ReactPlayer from "react-player";
 
 const EventPage = () => {
@@ -59,16 +60,8 @@ const EventPage = () => {
   if (activeTab === 1 || activeTab === 2) {
     content = (
       <div className="product-container2">
-        {products.map((product, index) => (
-          <div className="product-box" key={index}>
-            <div className="product-image"></div>
-            <div className="product-info">
-              <h3>{product.title}</h3>
-              <p>{product.team}</p>
-              <p> {product.date}</p>
-              <p>{product.price}</p>
-            </div>
-          </div>
+        {products.map((v, i) => (
+          <ProductCard product={v} index={i} />
         ))}
       </div>
     );
