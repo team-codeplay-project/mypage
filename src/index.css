@@ -1,0 +1,319 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-height: 100vh;
+  background: #70b8ff;
+}
+
+/* 화면 */
+.iphone-container {
+  width: 390px;
+  height: 844px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 50px;
+  position: relative;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  z-index: 1;
+  background: #ffffff;
+}
+.iphone-container.scroll-down .footer-container {
+  transform: translateY(100%);
+}
+
+.navigation-bar {
+  display: flex;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+  background: linear-gradient(125deg, #ffffff, #f0f0f0);
+  color: #000;
+  z-index: 3;
+  margin-bottom: -10px;
+}
+
+.time {
+  font-size: 14px;
+  font-weight: 700;
+  margin-right: 10px;
+  margin-top: 7px;
+  color: #000;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.icon {
+  font-size: 14px;
+  margin-left: 6px;
+  color: #000;
+  stroke-width: 7px;
+}
+
+.home-indicator {
+  width: 40%;
+  height: 6px;
+  background-color: #383838bf;
+  border-radius: 4px;
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.572);
+  z-index: 3;
+}
+
+.full-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 375px; /* 아이폰 가로 크기 */
+  height: 812px; /* 아이폰 세로 크기 */
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* 풋터 */
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  height: 90px;
+  color: black;
+  transition: transform 0.3s ease-in-out;
+  animation-name: slideIn;
+  animation-duration: 0.5s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+
+.tab-item:hover {
+  color: #007aff;
+  transform: scale(1.1);
+}
+
+.tab-item.active {
+  transform: scale(1.1);
+  color: #007aff;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=D2+coding:wght@400&display=swap");
+
+.tab-item span {
+  font-size: 12px;
+  margin-top: 4px;
+  font-family: "D2 Coding";
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  transition: background-color 0.3s ease;
+  padding: 10px 20px;
+  position: sticky;
+  top: 20px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  border-bottom: 2.5px solid #007aff;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  &.menu-open .side-menu {
+    transform: translateX(0);
+  }
+}
+
+.header-menu {
+  margin-right: 16px;
+  position: relative;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  margin-left: 13px;
+  margin-right: 13px;
+  font-size: 24px;
+  color: #191919;
+  transition: color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.header-icon:hover {
+  color: #007aff;
+  transform: scale(1.1);
+}
+
+.header-icon.active {
+  color: #007aff;
+  transform: scale(1.1);
+}
+
+.card-icon {
+  margin-top: 2px;
+}
+
+.search-container {
+  position: relative;
+  margin-right: 12px;
+}
+
+.search-container input {
+  padding: 3px 18px;
+  border: 3px solid #007aff;
+  border-radius: 16px;
+  outline: none;
+  font-size: 15px;
+  width: 212px;
+}
+
+.close-icon-container {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.close-icon {
+  color: #007aff;
+  cursor: pointer;
+  stroke-width: 1px;
+}
+
+/* 메뉴바 */
+.side-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 844px;
+  width: 280px;
+  margin-top: 0;
+  padding-top: 20px;
+  background-color: #fff;
+  transition: left 0.3s ease;
+  z-index: 10;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(110, 110, 110, 0.2);
+}
+
+.open .side-menu {
+  left: 0;
+}
+
+.close-icon2 {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 26px;
+  color: #2a2a2ac1;
+  cursor: pointer;
+  transition: font-weight 0.3s ease, transform 0.3s ease;
+}
+
+.close-icon2:hover {
+  color: #007aff;
+  transform: scale(1.1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.menu-items {
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.menu-item2 {
+  padding: 30px;
+  padding-top: 40px;
+  font-size: 28px;
+}
+
+.menu-item {
+  font-size: 20px;
+  padding: 20px 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  color: #2a2a2ac1;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+  align-items: center;
+}
+
+.menu-item:hover {
+  background-color: #007aff;
+  color: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.menu-item-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.menu-item:hover .menu-item-icon {
+  animation: fillIcon 0.5s forwards;
+}
+
+@keyframes fillIcon {
+  0% {
+    fill: transparent;
+  }
+  100% {
+    fill: #007aff;
+  }
+}
