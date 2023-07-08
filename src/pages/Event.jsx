@@ -1,32 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../style/rafflebox.css";
 import ProductCard from "../components/productcard";
+import axios from "axios";
 // import ReactPlayer from "react-player";
 
 const EventPage = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [isLoading , setIsLoading]= useState(false);
+  const [data , setdata] = useState() ;
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
 
-  const products = [
-    {
-      title: "사인볼",
-      date: "July 10, 2023",
-      price: "1 토큰",
-    },
-    {
-      title: "사인볼",
-      date: "July 10, 2023",
-      price: "1 토큰",
-    },
-    {
-      title: "사인볼",
-      date: "July 10, 2023",
-      price: "1 토큰",
-    },
-  ];
+  const get_Raffle_Data = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/raffle`
+      );
+      setdata(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect( () => { get_Raffle_Data() 
+    console.log(data);
+  } , [] ) ;
 
   let content;
 
@@ -57,14 +60,17 @@ const EventPage = () => {
     },
   ];
 
-  if (activeTab === 1 || activeTab === 2) {
+  if (activeTab === 1 ){
     content = (
       <div className="product-container2">
-        {products.map((v, i) => (
-          <ProductCard product={v} index={i} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div>loading</div>
+      ) : (
+        data?.map((v, i) => <ProductCard r_data={v} key={i} />)
+      )}
+    </div>
     );
+  } else if( activeTab === 2) {
   } else if (activeTab === 3) {
     content = (
       <div className="item-list">

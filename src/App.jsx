@@ -10,7 +10,7 @@ import Homepage from "./pages/Home";
 // import ReactPlayer from "react-player";
 import Mypage from "./pages/Mypage";
 import Ticket from "./pages/Ticket";
-import AdminPage from "./pages/Admin";
+import AdminPage from "./pages/admin";
 import { b_abi, b_addr } from "./raffletest.config";
 import Web3 from "web3";
 
