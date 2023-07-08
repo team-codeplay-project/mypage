@@ -27,7 +27,8 @@ const EventPage = () => {
     }
   };
 
-  useEffect( () => { get_Raffle_Data() 
+  useEffect( () => {
+    get_Raffle_Data() 
     console.log(data);
   } , [] ) ;
 
@@ -71,6 +72,7 @@ const EventPage = () => {
     </div>
     );
   } else if( activeTab === 2) {
+    
   } else if (activeTab === 3) {
     content = (
       <div className="item-list">
