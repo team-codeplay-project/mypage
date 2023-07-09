@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../style/rafflebox.css";
-import ProductCard from "../components/productcard";
 import axios from "axios";
+import RaffleCard from "../components/list_rafflecard";
+import AuctionCard from "../components/list_auctioncard";
 // import ReactPlayer from "react-player";
 
 const EventPage = () => {
@@ -17,7 +18,27 @@ const EventPage = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/raffle`
+        `${process.env.REACT_APP_BACKEND_URL}/raffle`,
+        { headers: {
+          "ngrok-skip-browser-warning":"any"
+        } }
+      );
+      setdata(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  const get_Auction_Data = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/auction`,
+        { headers: {
+          "ngrok-skip-browser-warning":"any"
+        } }
       );
       setdata(response.data);
       setIsLoading(false);
@@ -28,9 +49,13 @@ const EventPage = () => {
   };
 
   useEffect( () => {
-    get_Raffle_Data() 
-    console.log(data);
-  } , [] ) ;
+    if( activeTab === 1 ) {
+      get_Raffle_Data() ;
+    }
+    else if( activeTab === 2 ){
+      get_Auction_Data() ;
+    }
+  } , [activeTab] ) ;
 
   let content;
 
@@ -67,11 +92,20 @@ const EventPage = () => {
       {isLoading ? (
         <div>loading</div>
       ) : (
-        data?.map((v, i) => <ProductCard r_data={v} key={i} />)
+        data?.map((v, i) => <RaffleCard r_data={v} key={i} />)
       )}
     </div>
     );
   } else if( activeTab === 2) {
+    content = (
+      <div className="product-container2">
+      {isLoading ? (
+        <div>loading</div>
+      ) : (
+        data?.map((v, i) => <AuctionCard r_data={v} key={i} />)
+      )}
+    </div>
+    );
     
   } else if (activeTab === 3) {
     content = (

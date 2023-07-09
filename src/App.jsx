@@ -16,6 +16,7 @@ import Web3 from "web3";
 
 export const AppContext = createContext();
 
+const admin = '0x1f6D70acBd7B09096717fd5625783F78AF685A5a' ;
 function App() {
   const [account, setAccount] = useState("");
   const [logIn, setLogIn] = useState(false);
@@ -65,7 +66,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ account, connect, chkchainID, logIn, contract, web3 }}>
+      value={{ admin , account, connect, chkchainID, logIn, contract, web3 }}>
       <BrowserRouter>
         <div>
           {/* <div className="full-background">

@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const [raffle, setRaffle] = useState();
   const [Goods_url, setUrl] = useState('');
   const [Goods_name , setName ] = useState('상품 이름') ;
-  const { contract, web3 } = useContext(AppContext);
+  const { account , admin , contract , web3 } = useContext(AppContext);
+  const navigate = useNavigate() ;
 
   // await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
   //   account: accounts[0],
@@ -64,10 +66,12 @@ const AdminPage = () => {
       //console.log('f_s_b', start_block, typeof start_block);
 
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/raffle/`, {
-        name : Goods_name,
+        name : Goods_name,  
         url: Goods_url,
         start_block,
-      });
+      }, { headers: {
+        "ngrok-skip-browser-warning":"any"
+      } });
       
       
       console.log('create') ;
@@ -80,18 +84,16 @@ const AdminPage = () => {
 
   const RaffleEnd = async (key) => {
     try {
-      // e.preventDefault();
-
-      console.log( key ) ;
 
       let end_block = await web3.eth.getBlockNumber();
       end_block = Number(end_block);
-
       
       await axios.put(`${process.env.REACT_APP_BACKEND_URL}/raffle/:id/done`, {
          URL: Goods_url,
          end_block,
-      });
+      }, { headers: {
+        "ngrok-skip-browser-warning":"any"
+      } });
     } catch (error) {
       console.error(error);
     }
@@ -101,14 +103,24 @@ const AdminPage = () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/raffle`
-      );
+      , { headers: {
+        "ngrok-skip-browser-warning":"any"
+      } });
       setRaffle(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const chkadmin = () => {
+    if( account !== admin ){
+      navigate("/");
+    }
+    return ;
+  }
+
   useEffect(() => {
+    chkadmin() ;
     get_Raffle_Data();
   }, []);
 
@@ -134,7 +146,7 @@ const AdminPage = () => {
         <div className="flex flex-col">
           {raffle?.map((v, i) => {
             if (v.isEnd === false) {
-              return <button key={i} onClick={() => RaffleEnd(i+1)} >{v.id}번 래플 종료</button>;
+              return <button key={i} onClick={() => RaffleEnd(v.id)} >{v.id}번 래플 종료</button>;
             }
             return null;
           })}

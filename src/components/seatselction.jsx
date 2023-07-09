@@ -53,7 +53,7 @@ const SeatSelectionPage = () => {
       { row: 2, seats: 15 },
       { row: 3, seats: 15 },
       { row: 4, seats: 16 },
-    ];
+    ] ;
 
     return seatMap.map(({ row, seats }) => {
       const rowSeats = [];
