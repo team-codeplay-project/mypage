@@ -1,32 +1,37 @@
-.tab-bar {
+/* 탭 */
+.tab3-container {
   display: flex;
-  background-color: #ffffff;
+  justify-content: center;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.3s;
 }
 
-.tab {
+.tab3 {
   flex: 1;
   padding: 10px;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
   color: #007aff;
-  transition: color 0.3s, background-color 0.3s;
+  background-color: transparent;
+  border: none;
+  outline: none;
   cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+  transform: translateY(0);
 }
 
-.tab.active {
+.tab3:hover {
   color: #ffffff;
   background-color: #007aff;
+  transform: translateY(-2px);
 }
 
-.tab-content {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  margin-top: 16px;
+.tab3.active {
+  color: #ffffff;
+  background-color: #007aff;
+  transform: translateY(-2px);
 }
 
 .item-list {
@@ -52,46 +57,65 @@
   }
 }
 
-/* .item {
+.card-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
+  justify-content: center;
 }
 
-.item-image-container {
-  flex: 0 0 auto;
+/* mypage.css */
+
+.card {
+  width: 90%;
+  max-width: 500px;
+  height: 400px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: transform 0.3s;
 }
 
-.item-image {
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.nft-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nft-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Increase the margin between items */
+}
+
+.nft-item img {
   width: 100%;
   height: 100px;
-  object-fit: cover;
-  border-radius: 5px;
-  transition: transform 0.3s ease-in-out;
+  display: block;
+  border-radius: 8px;
 }
 
-.item-image:hover {
-  transform: scale(1.1);
-}
-
-.item-content {
-  flex: 1;
+.nft-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
   text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
-.item-name {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.item-description {
+.nft-overlay span {
   font-size: 14px;
-  color: #555555;
-} */
+}
