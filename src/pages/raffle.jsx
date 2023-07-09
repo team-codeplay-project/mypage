@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { AppContext } from "../App";
-import axios from "axios";
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { AppContext } from '../App';
+import axios from 'axios';
 
 const Raffle = () => {
   const [chkscreen, setChkScreen] = useState(false);
@@ -20,13 +20,11 @@ const Raffle = () => {
       if (endchk == true) {
         setChkScreen(2);
       } else {
-        // console.log(response);
         const f_B = response.data.start_block; // fromBlock : 은 디비에서
-        // console.log(f_B);
-        const a = await contract.getPastEvents("Raffle", {
+        const a = await contract.getPastEvents('Raffle', {
           filter: { _idx: r_idx },
           fromBlock: f_B,
-          toBlock: "latest",
+          toBlock: 'latest',
         });
 
         for (const v of a) {
