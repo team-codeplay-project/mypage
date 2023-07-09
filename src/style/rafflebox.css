@@ -74,15 +74,16 @@
   width: 100%;
   max-width: 300px;
   margin: 0 auto;
-  .tab-item:hover {
-    color: #007aff;
-    transform: scale(1.1);
-  }
+}
 
-  &:hover,
-  &:focus {
-    transform: translateY(-5px);
-  }
+.product-box .tab-item:hover {
+  color: #007aff;
+  transform: scale(1.1);
+}
+
+.product-box:hover,
+.product-box:focus {
+  transform: translateY(-5px);
 }
 
 .product-image {
@@ -184,7 +185,6 @@
 }
 
 /* 경매 버튼 */
-
 .auction-price-container {
   display: flex;
   align-items: center;
