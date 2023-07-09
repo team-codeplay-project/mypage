@@ -53,7 +53,7 @@ const SeatSelectionPage = () => {
       { row: 2, seats: 15 },
       { row: 3, seats: 15 },
       { row: 4, seats: 16 },
-    ] ;
+    ];
 
     return seatMap.map(({ row, seats }) => {
       const rowSeats = [];
@@ -85,27 +85,29 @@ const SeatSelectionPage = () => {
   };
 
   return (
-    <div className="seat-selection-page">
-      <div className="seat-container">
-        <h2>테이블석</h2>
-        <div className="seat-map">{renderSeatMap()}</div>
-      </div>
-      <div className="booking-container">
-        <div className="ticket-quantity">
-          <h2>티켓 수량</h2>
-          <input
-            type="number"
-            min="1"
-            value={ticketQuantity}
-            onChange={handleTicketQuantityChange}
-          />
+    <div className="combine-card">
+      <div className="seat-selection-page">
+        <div className="seat-container">
+          <h2>테이블석</h2>
+          <div className="seat-map">{renderSeatMap()}</div>
         </div>
-        {selectedSeats.length > 0 && (
-          <SelectedSeatsCard
-            seats={selectedSeats}
-            onConfirm={handleConfirmBooking}
-          />
-        )}
+        <div className="booking-container">
+          <div className="ticket-quantity">
+            <h2>티켓 수량</h2>
+            <input
+              type="number"
+              min="1"
+              value={ticketQuantity}
+              onChange={handleTicketQuantityChange}
+            />
+          </div>
+          {selectedSeats.length > 0 && (
+            <SelectedSeatsCard
+              seats={selectedSeats}
+              onConfirm={handleConfirmBooking}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
