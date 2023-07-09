@@ -11,7 +11,7 @@ import Homepage from "./pages/Home";
 import Mypage from "./pages/Mypage";
 import Ticket from "./pages/Ticket";
 import AdminPage from "./pages/Admin";
-import { b_abi, b_addr } from "./raffletest.config";
+import { n_abi, n_addr, t_abi, t_addr } from "./raffletest.config";
 import Web3 from "web3";
 
 export const AppContext = createContext();
@@ -22,7 +22,8 @@ function App() {
   const [logIn, setLogIn] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contract = new web3.eth.Contract(b_abi, b_addr);
+  const token_c = new web3.eth.Contract(t_abi, t_addr);
+  const nft_c = new web3.eth.Contract(n_abi, n_addr);
 
   const connect = async () => {
     try {
@@ -66,7 +67,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ admin , account, connect, chkchainID, logIn, contract, web3 }}>
+      value={{ account, connect, chkchainID, logIn, web3 , token_c , nft_c }}>
       <BrowserRouter>
         <div>
           {/* <div className="full-background">
@@ -91,7 +92,7 @@ function App() {
               <Route path="/Ticket" element={<Ticket />} />
               <Route path="/Event" element={<EventPage />} />
               <Route path="/Mypage" element={<Mypage />} />
-              <Route path="/AdminPage" element={<AdminPage />} />
+              <Route path="/AdminPage" element={<AdminPage admin={admin}/>} />
             </Routes>
             <Footer />
           </div>

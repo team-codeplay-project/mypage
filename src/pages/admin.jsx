@@ -3,56 +3,16 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../App';
 import { useNavigate } from 'react-router-dom';
 
-const AdminPage = () => {
+const chk = {} ;
+const AdminPage = ( { admin } ) => {
   const [raffle, setRaffle] = useState();
-  const [Goods_url, setUrl] = useState('');
+  const [Goods_url, setUrl] = useState();
   const [Goods_name , setName ] = useState('상품 이름') ;
-  const { account , admin , contract , web3 } = useContext(AppContext);
+  const [ winner , setWinner ] = useState([]);
+  const [ n , setN ] = useState() ;
+  const [ E , setE ] = useState() ;
+  const { token_c , web3 , account } = useContext(AppContext);
   const navigate = useNavigate() ;
-
-  // await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/user`, {
-  //   account: accounts[0],
-  //   email,
-  //   signedToken,
-  // });
-
-  // localStorage.setItem("signedToken", signedToken);
-
-  // const get_R_data = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_BACKEND_URL}/raffle/${r_idx}`
-  //     );
-
-  //     const endchk = response.data.isEnd;
-
-  //     if (endchk == true) {
-  //       setChkScreen(2);
-  //     } else {
-  //       // console.log(response);
-  //       const f_B = response.data.start_block; // fromBlock : 은 디비에서
-  //       // console.log(f_B);
-  //       const a = await contract.getPastEvents('Raffle', {
-  //         filter: { _idx: r_idx },
-  //         fromBlock: f_B,
-  //         toBlock: 'latest',
-  //       });
-
-  //       for (const v of a) {
-  //         const nowdata = v.returnValues._add.toLowerCase();
-  //         if (nowdata === account) {
-  //           setChkScreen(1);
-  //           break; // 중지
-  //         }
-  //       }
-  //     }
-
-  //     setIsLoading(false);
-  //     //console.log( 'chk_raffle!' ) ;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const create = async (e) => {
     try {
@@ -61,10 +21,6 @@ const AdminPage = () => {
       let start_block = await web3.eth.getBlockNumber();
       start_block = Number(start_block);
 
-      console.log( Goods_name , Goods_url);
-
-      //console.log('f_s_b', start_block, typeof start_block);
-
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/raffle/`, {
         name : Goods_name,  
         url: Goods_url,
@@ -72,9 +28,9 @@ const AdminPage = () => {
       }, { headers: {
         "ngrok-skip-browser-warning":"any"
       } });
-      
-      
-      console.log('create') ;
+
+
+      console.log( 'create' , e ) ;
 
       get_Raffle_Data();
     } catch (error) {
@@ -84,18 +40,76 @@ const AdminPage = () => {
 
   const RaffleEnd = async (key) => {
     try {
-
+      
+      setN( key ) ;
       let end_block = await web3.eth.getBlockNumber();
       end_block = Number(end_block);
-      
-      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/raffle/:id/done`, {
-         URL: Goods_url,
-         end_block,
-      }, { headers: {
+      setE( end_block ) ;
+
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/raffle/${key}`,
+{ headers: {
         "ngrok-skip-browser-warning":"any"
-      } });
+      } }
+      );
+
+      const f_B = response.data.start_block; // fromBlock : 은 디비에서
+      const e_B = end_block ;
+        
+      const a = await token_c.getPastEvents('Raffle', {
+          filter: { _idx: key },
+          fromBlock: f_B,
+          toBlock: e_B ,
+      });
+
+      initializeChk() ;
+      console.log( 'a!' , a ) ;
+
+      a.map((v)=>{
+        const nowdata = v.returnValues._add.toLowerCase() ;
+        if (chk[nowdata] !== true ){
+          chk[ nowdata ] = true ;
+          setWinner(prev => [...prev, nowdata]);  
+        }
+      });
+
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const getwinner = async() => {
+
+    let idx = await token_c.methods.Raffle_End( n , winner.length ).call() ;
+    idx = Number( idx ) ;
+    // console.log( idx , ( typeof idx ) ) ; 
+
+    await axios.put(`${process.env.REACT_APP_BACKEND_URL}/raffle/${n}}/done`, {
+      end_block : E,
+      winner : winner[ idx ],
+   },{ headers: {
+        "ngrok-skip-browser-warning":"any"
+      } });
+
+    // console.log(winner) ;
+    // console.log( idx , winner[idx]) ;
+    console.log( 'Raffle_' , n , ' is End' ) ;
+
+  }
+
+  useEffect( () => {
+    const length = winner.length ;
+    if( length !== 0 ){
+      setWinner([]);
+      getwinner() ;
+    } 
+  } , [winner] ) ;
+
+  const initializeChk = () => {
+    for (const key in chk) {
+      if (chk.hasOwnProperty(key)) {
+        delete chk[key];
+      }
     }
   };
 
@@ -112,15 +126,11 @@ const AdminPage = () => {
     }
   };
 
-  const chkadmin = () => {
-    if( account !== admin ){
-      navigate("/");
-    }
-    return ;
-  }
 
   useEffect(() => {
-    chkadmin() ;
+    if( account !== admin ){
+      //  navigate("/");
+    }
     get_Raffle_Data();
   }, []);
 
