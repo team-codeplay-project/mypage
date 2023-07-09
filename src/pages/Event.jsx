@@ -7,8 +7,8 @@ import AuctionCard from "../components/list_auctioncard";
 
 const EventPage = () => {
   const [activeTab, setActiveTab] = useState(1);
-  const [isLoading , setIsLoading]= useState(false);
-  const [data , setdata] = useState() ;
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setdata] = useState();
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
@@ -19,9 +19,11 @@ const EventPage = () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/raffle`,
-        { headers: {
-          "ngrok-skip-browser-warning":"any"
-        } }
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
       );
       setdata(response.data);
       setIsLoading(false);
@@ -36,9 +38,11 @@ const EventPage = () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/auction`,
-        { headers: {
-          "ngrok-skip-browser-warning":"any"
-        } }
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
       );
       setdata(response.data);
       setIsLoading(false);
@@ -48,14 +52,13 @@ const EventPage = () => {
     }
   };
 
-  useEffect( () => {
-    if( activeTab === 1 ) {
-      get_Raffle_Data() ;
+  useEffect(() => {
+    if (activeTab === 1) {
+      get_Raffle_Data();
+    } else if (activeTab === 2) {
+      get_Auction_Data();
     }
-    else if( activeTab === 2 ){
-      get_Auction_Data() ;
-    }
-  } , [activeTab] ) ;
+  }, [activeTab]);
 
   let content;
 
@@ -86,27 +89,26 @@ const EventPage = () => {
     },
   ];
 
-  if (activeTab === 1 ){
+  if (activeTab === 1) {
     content = (
       <div className="product-container2">
-      {isLoading ? (
-        <div>loading</div>
-      ) : (
-        data?.map((v, i) => <RaffleCard r_data={v} key={i} />)
-      )}
-    </div>
+        {isLoading ? (
+          <div>loading</div>
+        ) : (
+          data?.map((v, i) => <RaffleCard r_data={v} key={i} />)
+        )}
+      </div>
     );
-  } else if( activeTab === 2) {
+  } else if (activeTab === 2) {
     content = (
       <div className="product-container2">
-      {isLoading ? (
-        <div>loading</div>
-      ) : (
-        data?.map((v, i) => <AuctionCard r_data={v} key={i} />)
-      )}
-    </div>
+        {isLoading ? (
+          <div>loading</div>
+        ) : (
+          data?.map((v, i) => <AuctionCard r_data={v} key={i} />)
+        )}
+      </div>
     );
-    
   } else if (activeTab === 3) {
     content = (
       <div className="item-list">
@@ -151,6 +153,20 @@ const EventPage = () => {
       </div>
 
       <div className="product-gallery">{content}</div>
+
+      {activeTab === 1 && (
+        <div className="button-group">
+          <button className="ongoing-button">진행중</button>
+          <button className="completed-button">마감</button>
+        </div>
+      )}
+
+      {activeTab === 2 && (
+        <div className="button-group">
+          <button className="ongoing-button">진행중</button>
+          <button className="completed-button">마감</button>
+        </div>
+      )}
     </>
   );
 };
