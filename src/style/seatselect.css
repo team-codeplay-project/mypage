@@ -1,13 +1,3 @@
-.seat-selection-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
 .seat-container {
   width: 100%;
   max-width: 380px;
