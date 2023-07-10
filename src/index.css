@@ -272,30 +272,26 @@ body {
 
 .menu-items {
   list-style: none;
-  padding: 20px 0;
+  padding: 0;
   margin: 0;
-}
-
-.menu-item2 {
-  padding: 30px;
-  padding-top: 40px;
-  font-size: 28px;
+  margin-top: 10px;
 }
 
 .menu-item {
   font-size: 20px;
-  padding: 20px 30px;
+  padding: 20px;
+  padding-left: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
   display: flex;
   color: #2a2a2ac1;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
   align-items: center;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 .menu-item:hover {
   background-color: #007aff;
-  color: #f0f0f0;
+  color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -306,14 +302,30 @@ body {
 }
 
 .menu-item:hover .menu-item-icon {
-  animation: fillIcon 0.5s forwards;
+  color: #fff;
 }
 
-@keyframes fillIcon {
-  0% {
-    fill: transparent;
-  }
-  100% {
-    fill: #007aff;
-  }
+.login-link {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  padding: 20px;
+  padding-left: 30px;
+  margin-top: 30px;
+  color: #000000c1;
+  transition: color 0.3s ease;
+}
+
+.login-link-icon {
+  margin-left: 10px;
+}
+
+.login-link-icon:hover {
+  color: #007aff;
+}
+
+.welcome-message {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }

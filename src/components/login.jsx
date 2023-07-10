@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../style.login.css";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
+  const history = useHistory();
 
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
@@ -13,8 +15,11 @@ const Login = () => {
     setPhone(event.target.value);
   };
 
-  const handleLogin = () => {
-    // 닉네임과 휴대폰 번호를 가져와서 로그인 처리하는 코드 필요
+  const handleLoginButtonClick = () => {
+    if (nickname && phone) {
+      handleLogin(nickname);
+      history.push("/");
+    }
   };
 
   return (
@@ -34,7 +39,7 @@ const Login = () => {
         onChange={handlePhoneChange}
         className="input-field"
       />
-      <button className="login-button" onClick={handleLogin}>
+      <button className="login-button" onClick={handleLoginButtonClick}>
         로그인
       </button>
     </div>

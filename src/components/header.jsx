@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoSearchCircle } from "react-icons/io5";
-import { MdOutlineAddCard, MdCreditCard } from "react-icons/md";
+import {
+  MdOutlineAddCard,
+  MdCreditCard,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 import { CgCloseR } from "react-icons/cg";
 import { GrClose } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const Header = ({ account, setAccount }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCardConnected, setIsCardConnected] = useState(false);
   const [connectedAccount, setConnectedAccount] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -39,6 +45,12 @@ const Header = ({ account, setAccount }) => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  //Login 페이지에서 사용자가 성공적으로 로그인하면, handleLoginButtonClick 함수에서 페이지 이동 통해 Header 컴포넌트의 loggedInUser 상태 업데이트.
+  // handleLogin 함수를 Login 컴포넌트에서 받아와 사용, 로그인이 성공했을시 handleLogin 함수 호출
+  const handleLogin = (user) => {
+    setLoggedInUser(user);
   };
 
   return (
@@ -88,7 +100,7 @@ const Header = ({ account, setAccount }) => {
                 marginTop: "-6px",
                 marginLeft: "16px",
               }}>
-              {connectedAccount.slice(-4)}
+              {connectedAccount?.slice(-4)}
             </span>
           </div>
         ) : (
@@ -100,7 +112,23 @@ const Header = ({ account, setAccount }) => {
         )}
         <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
           <GrClose className="close-icon2" size={20} onClick={toggleMenu} />
-          <h1 className="menu-item2">배다옴 님</h1>
+          {loggedInUser ? (
+            <span
+              className="welcome-message"
+              style={{
+                fontSize: "24px",
+                fontWeight: "bold",
+              }}>
+              {`${loggedInUser} 님`}
+            </span>
+          ) : (
+            <Link to="/login" className="login-link">
+              로그인
+              <Link to="/login" className="login-link-icon">
+                <MdOutlineArrowForwardIos size={20} />
+              </Link>
+            </Link>
+          )}
           <ul className="menu-items">
             <li className="menu-item">MY 티켓</li>
             <li className="menu-item">MY 잔고</li>
