@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RiHomeLine } from "react-icons/ri";
 import { HiOutlineTicket } from "react-icons/hi";
 import { HiOutlineHeart } from "react-icons/hi";
-import { FiUserPlus } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
@@ -26,7 +26,7 @@ const Footer = () => {
       <TabItem icon={RiHomeLine} label="홈" tab="/" />
       <TabItem icon={HiOutlineTicket} label="티켓" tab="/ticket" />
       <TabItem icon={HiOutlineHeart} label="이벤트" tab="/event" />
-      <TabItem icon={FiUserPlus} label="마이" tab="/mypage" />
+      <TabItem icon={FiUser} label="마이" tab="/mypage" />
       <div className="home-indicator"></div>
     </div>
   );

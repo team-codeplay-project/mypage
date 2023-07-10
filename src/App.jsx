@@ -13,10 +13,11 @@ import Ticket from "./pages/Ticket";
 import AdminPage from "./pages/Admin";
 import { n_abi, n_addr, t_abi, t_addr } from "./raffletest.config";
 import Web3 from "web3";
+import LoginPage from "./components/login";
 
 export const AppContext = createContext();
 
-const admin = '0x1f6D70acBd7B09096717fd5625783F78AF685A5a' ;
+const admin = "0x1f6D70acBd7B09096717fd5625783F78AF685A5a";
 function App() {
   const [account, setAccount] = useState("");
   const [logIn, setLogIn] = useState(false);
@@ -67,7 +68,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ account, connect, chkchainID, logIn, web3 , token_c , nft_c }}>
+      value={{ account, connect, chkchainID, logIn, web3, token_c, nft_c }}>
       <BrowserRouter>
         <div>
           {/* <div className="full-background">
@@ -92,7 +93,8 @@ function App() {
               <Route path="/Ticket" element={<Ticket />} />
               <Route path="/Event" element={<EventPage />} />
               <Route path="/Mypage" element={<Mypage />} />
-              <Route path="/AdminPage" element={<AdminPage admin={admin}/>} />
+              <Route path="/LoginPage" element={<LoginPage />} />
+              <Route path="/AdminPage" element={<AdminPage admin={admin} />} />
             </Routes>
             <Footer />
           </div>

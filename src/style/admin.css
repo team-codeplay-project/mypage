@@ -1,11 +1,46 @@
-/*가격 출금*/
-.product-container2 {
+.tab4-container {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  transition: transform 0.3s;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+  transform: translateY(0);
+}
+
+.tab:hover {
+  color: #ffffff;
+  background-color: #000000;
+  transform: translateY(-2px);
+}
+
+.tab.active {
+  color: #ffffff;
+  background-color: #000000;
+  transform: translateY(-2px);
+}
+
+/* 가격 */
+.product3-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
 }
 
-.product-box {
+.product3-box {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,12 +55,12 @@
   margin: 0 auto;
 }
 
-.product-box:hover,
-.product-box:focus {
+.product3-box:hover,
+.product3-box:focus {
   transform: translateY(-5px);
 }
 
-.product-image {
+.product3-image {
   width: 100%;
   height: 250px;
   background-color: #ccc;
@@ -33,20 +68,21 @@
   margin-bottom: 10px;
 }
 
-.product-info {
+.product3-info {
   text-align: center;
 }
 
-.product-info h3 {
+.product3-info h3 {
   font-size: 18px;
   margin: 8px 0;
 }
 
-.product-info p {
+.product3-info p {
   font-size: 14px;
   margin: 0;
 }
 
+/* 가격 관리자 */
 .price-container {
   margin-top: 20px;
   padding: 20px;
@@ -85,7 +121,7 @@
   background-color: #0056b3;
 }
 
-/*래플,경매*/
+/* 래플 */
 .product-container2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

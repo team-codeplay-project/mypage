@@ -10,7 +10,7 @@ body {
   justify-content: center;
   overflow: hidden;
   min-height: 100vh;
-  background: #70b8ff;
+  background: #f9f9f9;
 }
 
 /* 화면 */
@@ -26,7 +26,7 @@ body {
   flex-direction: column;
   flex: 1;
   z-index: 1;
-  background: #ffffff;
+  background: #2146ff;
 }
 .iphone-container.scroll-down .footer-container {
   transform: translateY(100%);
@@ -107,7 +107,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 9;
 }
 
 @keyframes slideIn {
@@ -163,7 +163,7 @@ body {
   left: 0;
   right: 0;
   z-index: 10;
-  border-bottom: 2.5px solid #007aff;
+  border-bottom: 2.5px solid #fafcf8;
   background: linear-gradient(135deg, #ffffff, #f0f0f0);
   &.menu-open .side-menu {
     transform: translateX(0);
@@ -241,7 +241,7 @@ body {
   width: 280px;
   margin-top: 0;
   padding-top: 20px;
-  background-color: #fff;
+  background-color: #fbfbfb;
   transition: left 0.3s ease;
   z-index: 10;
   transform: translateX(-100%);
@@ -265,7 +265,7 @@ body {
 }
 
 .close-icon2:hover {
-  color: #007aff;
+  color: #2146ff;
   transform: scale(1.1);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -290,7 +290,7 @@ body {
 }
 
 .menu-item:hover {
-  background-color: #007aff;
+  background-color: #2146ff;
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -321,7 +321,7 @@ body {
 }
 
 .login-link-icon:hover {
-  color: #007aff;
+  color: #2146ff;
 }
 
 .welcome-message {

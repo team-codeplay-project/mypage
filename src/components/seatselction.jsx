@@ -11,7 +11,7 @@ const SelectedSeatsCard = ({ seats, onConfirm }) => {
             <li key={seat}>{seat}</li>
           ))}
         </ul>
-        <button onClick={onConfirm}>예매하기</button>
+        <button onClick={onConfirm}>선택</button>
       </div>
     </div>
   );

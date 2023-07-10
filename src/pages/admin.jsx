@@ -207,40 +207,42 @@ const AdminPage = ({ admin }) => {
 
   if (activeTab === 1) {
     content = (
-      <div className="product-container2">
-        <form onSubmit={create}>
-          <input
-            className="text-black"
-            type="text"
-            placeholder="상품 URL"
-            value={Goods_url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-          <input
-            className="text-black"
-            type="text"
-            placeholder="상품 이름"
-            value={Goods_name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <button className="p-2 m-2">래플 생성</button>
-          <button className="p-2 m-2">생성 완료</button>
-        </form>
+      <div className="back-container">
+        <div className="product-container2">
+          <form onSubmit={create}>
+            <input
+              className="text-black"
+              type="text"
+              placeholder="상품 URL"
+              value={Goods_url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            <input
+              className="text-black"
+              type="text"
+              placeholder="상품 이름"
+              value={Goods_name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <button className="p-2 m-2">래플 생성</button>
+            <button className="p-2 m-2">생성 완료</button>
+          </form>
 
-        {isLoading ? (
-          <div>loading</div>
-        ) : (
-          data?.map((v, i) => {
-            if (v.isEnd === false) {
-              return (
-                <button key={i} onClick={() => RaffleEnd(v.id)}>
-                  {v.id}번 래플 종료
-                </button>
-              );
-            }
-            return null;
-          })
-        )}
+          {isLoading ? (
+            <div>loading</div>
+          ) : (
+            data?.map((v, i) => {
+              if (v.isEnd === false) {
+                return (
+                  <button key={i} onClick={() => RaffleEnd(v.id)}>
+                    {v.id}번 래플 종료
+                  </button>
+                );
+              }
+              return null;
+            })
+          )}
+        </div>
       </div>
     );
   } else if (activeTab === 2) {
@@ -283,7 +285,7 @@ const AdminPage = ({ admin }) => {
   } else if (activeTab === 3) {
     content = (
       <>
-        <div className="price-container">
+        <div className="price-container2">
           <h3>래플 가격 설정</h3>
           <input
             className="price-input"
@@ -312,7 +314,7 @@ const AdminPage = ({ admin }) => {
 
   return (
     <>
-      <div className="tab2-container shadow-md">
+      <div className="tab4-container shadow-md">
         <button
           className={`tab ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}

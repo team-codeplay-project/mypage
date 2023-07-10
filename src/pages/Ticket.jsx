@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../style/booking.css";
-import "../style/seatselect.css";
+// import "../style/seatselect.css";
 import Dropdown from "react-dropdown-select";
 import { BiBaseball } from "react-icons/bi";
 import { LuArmchair } from "react-icons/lu";
@@ -9,13 +9,11 @@ const SelectedSeatsCard = ({ seats, onConfirm }) => {
   return (
     <div className="selected-seats-card">
       <div className="selected-seats">
-        <h2>선택한 좌석</h2>
         <ul>
           {seats.map((seat) => (
             <li key={seat}>{seat}</li>
           ))}
         </ul>
-        <button onClick={onConfirm}>예매하기</button>
       </div>
     </div>
   );
@@ -89,12 +87,10 @@ const SeatSelectionPage = ({ onClose, onConfirm }) => {
     <div className="combine-card">
       <div className="seat-selection-page">
         <div className="seat-container">
-          <h3>테이블석</h3>
           <div className="seat-map">{renderSeatMap()}</div>
         </div>
         <div className="booking-container">
           <div className="ticket-quantity">
-            <h3>티켓 수량</h3>
             <input
               type="number"
               min="1"
@@ -139,22 +135,14 @@ const TicketBooking = () => {
     {
       value: "익사이팅존",
       label: "익사이팅존",
-      options: [
-        { value: "1루 익사이팅존", label: "1루 익사이팅존" },
-        { value: "3루 익사이팅존", label: "3루 익사이팅존" },
-      ],
+      options: [{ value: "1루 익사이팅존", label: "1루 익사이팅존" }],
     },
   ];
 
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [selectedSection, setSelectedSection] = useState(null);
   const [selectedSeat, setSelectedSeat] = useState(null);
-  const [activeTab, setActiveTab] = useState(1);
   const [showSeatSelection, setShowSeatSelection] = useState(false);
-
-  const handleTabClick = (tabIndex) => {
-    setActiveTab(tabIndex);
-  };
 
   const handleTicketClick = (ticket) => {
     setSelectedTicket(ticket);
@@ -187,107 +175,95 @@ const TicketBooking = () => {
     console.log("Ticket Quantity:", ticketQuantity);
     // 예매 확인 처리 함수
     // 선택된 좌석 및 티켓 수량 전송
-    setShowSeatSelection(false); // Close the seat selection page after confirming booking
+    setShowSeatSelection(false);
   };
 
   return (
-    <>
-      <div className="tab3-container">
-        <button
-          className={`tab3 ${activeTab === 1 ? "active" : ""}`}
-          onClick={() => handleTabClick(1)}
-          role="tab">
-          티켓 예매
+    <div>
+      <div className="title2-container">
+        <h3 className="title2">티켓 예매</h3>
+      </div>
+      <div className="ticket-booking-container">
+        <div className="section">
+          <h3 className="section-title">
+            <BiBaseball className="section-icon" />
+            경기
+          </h3>
+          <div className="ticket-list">
+            {tickets.map((ticket) => (
+              <div
+                key={ticket}
+                className={`ticket-item ${
+                  selectedTicket === ticket ? "selected" : ""
+                }`}
+                onClick={() => handleTicketClick(ticket)}>
+                <p>{ticket}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="section2">
+          <h3 className="section2-title">
+            <LuArmchair className="section2-icon" />
+            구역
+          </h3>
+          <div className="seat-select">
+            <Dropdown
+              options={seatSections}
+              value={selectedSection}
+              onChange={handleSectionChange}
+              placeholder="Select a section"
+              className="dropdown-select"
+              menuPlacement="auto"
+            />
+          </div>
+        </div>
+
+        {selectedSection && (
+          <div className="section3">
+            <h3 className="section3-title">
+              <LuArmchair className="section3-icon" />
+              좌석
+            </h3>
+            <div className="seat-select2">
+              <Dropdown
+                options={
+                  seatSections.find(
+                    (section) => section.value === selectedSection
+                  )?.options || []
+                }
+                value={selectedSeat}
+                onChange={(option) => setSelectedSeat(option[0].value)}
+                placeholder="Select a seat"
+                className="dropdown-select"
+                menuPlacement="auto"
+              />
+              {selectedSeat === "1루 테이블석" && (
+                <>
+                  {showSeatSelection ? (
+                    <SeatSelectionPage
+                      onClose={handleSeatSelectionClose}
+                      onConfirm={handleConfirmBooking}
+                    />
+                  ) : (
+                    <button
+                      className="seat-selection-button"
+                      onClick={handleSeatSelectionClick}>
+                      좌석 선택하기
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        <button className="book-button" onClick={handleBooking}>
+          예매하기
         </button>
       </div>
-
-      <div className="ticket-booking">
-        {activeTab === 1 && (
-          <>
-            <div className="section-row">
-              <div className="section">
-                <h3 className="section-title">
-                  <BiBaseball className="section-icon" />
-                  경기
-                </h3>
-                <div className="ticket-list">
-                  {tickets.map((ticket) => (
-                    <div
-                      key={ticket}
-                      className={`ticket-item ${
-                        selectedTicket === ticket ? "selected" : ""
-                      }`}
-                      onClick={() => handleTicketClick(ticket)}>
-                      <p>{ticket}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="section">
-              <h3 className="section-title">
-                <LuArmchair className="section-icon" />
-                구역
-              </h3>
-              <div className="seat-select">
-                <Dropdown
-                  options={seatSections}
-                  value={selectedSection}
-                  onChange={handleSectionChange}
-                  placeholder="Select a section"
-                  className="dropdown-select"
-                  menuPlacement="auto"
-                />
-              </div>
-            </div>
-
-            {selectedSection && (
-              <div className="section">
-                <h3 className="section-title">
-                  <LuArmchair className="section-icon" />
-                  좌석
-                </h3>
-                <div className="seat-select">
-                  <Dropdown
-                    options={
-                      seatSections.find(
-                        (section) => section.value === selectedSection
-                      )?.options || []
-                    }
-                    value={selectedSeat}
-                    onChange={(option) => setSelectedSeat(option[0].value)}
-                    placeholder="Select a seat"
-                    className="dropdown-select"
-                    menuPlacement="auto"
-                  />
-                  {selectedSeat === "1루 테이블석" && (
-                    <>
-                      {showSeatSelection ? (
-                        <SeatSelectionPage
-                          onClose={handleSeatSelectionClose}
-                          onConfirm={handleConfirmBooking}
-                        />
-                      ) : (
-                        <button
-                          className="seat-selection-button"
-                          onClick={handleSeatSelectionClick}>
-                          좌석 선택하기
-                        </button>
-                      )}
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <button className="book-button" onClick={handleBooking}>
-              예매하기
-            </button>
-          </>
-        )}
-      </div>
-    </>
+    </div>
   );
 };
 

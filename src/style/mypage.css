@@ -9,12 +9,12 @@
 
 .tab3 {
   flex: 1;
-  padding: 10px;
+  padding: 6px;
   text-align: center;
   font-size: 16px;
   font-weight: bold;
-  color: #007aff;
-  background-color: transparent;
+  color: #000000;
+  background-color: white;
   border: none;
   outline: none;
   cursor: pointer;
@@ -24,13 +24,12 @@
 
 .tab3:hover {
   color: #ffffff;
-  background-color: #007aff;
   transform: translateY(-2px);
 }
 
 .tab3.active {
   color: #ffffff;
-  background-color: #007aff;
+  background-color: #000000;
   transform: translateY(-2px);
 }
 
@@ -43,6 +42,7 @@
 .item-box {
   padding: 10px;
   padding-top: 0px;
+
   animation: fade-in 0.5s ease-in-out;
 }
 
@@ -62,14 +62,13 @@
   justify-content: center;
 }
 
-/* mypage.css */
-
 .card {
-  width: 90%;
-  max-width: 500px;
-  height: 400px;
+  width: 340px;
+  height: 844px;
+  padding: 5px;
+  margin: 20px;
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s;
@@ -81,6 +80,18 @@
 
 .card-content {
   padding: 20px;
+}
+
+.card2 {
+  width: 340px;
+  height: 844px;
+  padding: 5px;
+  margin: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
 }
 
 .nft-list {

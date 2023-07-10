@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import "../style.login.css";
+import { useNavigate } from "react-router-dom";
+import "../style/login.css";
 
-const Login = ({ handleLogin }) => {
+const LoginPage = ({ handleLogin }) => {
   const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleNicknameChange = (event) => {
     setNickname(event.target.value);
@@ -18,7 +18,7 @@ const Login = ({ handleLogin }) => {
   const handleLoginButtonClick = () => {
     if (nickname && phone) {
       handleLogin(nickname);
-      history.push("/");
+      navigate("/");
     }
   };
 
@@ -46,4 +46,4 @@ const Login = ({ handleLogin }) => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -30,7 +30,7 @@ const Mypage = () => {
           내 토큰
         </button>
       </div>
-      <div className="p-4 mt-2">
+      <div>
         <div className="card-container">
           <div className="card">
             <div className="card-content">
