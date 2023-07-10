@@ -133,19 +133,19 @@ const EventPage = () => {
     <>
       <div className="tab2-container shadow-md">
         <button
-          className={`tab ${activeTab === 1 ? "active" : ""}`}
+          className={`tab2 ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}
           role="tab">
           래플
         </button>
         <button
-          className={`tab ${activeTab === 2 ? "active" : ""}`}
+          className={`tab2 ${activeTab === 2 ? "active" : ""}`}
           onClick={() => handleTabClick(2)}
           role="tab">
           옥션
         </button>
         <button
-          className={`tab ${activeTab === 3 ? "active" : ""}`}
+          className={`tab2 ${activeTab === 3 ? "active" : ""}`}
           onClick={() => handleTabClick(3)}
           role="tab">
           확인하기
