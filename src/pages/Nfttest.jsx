@@ -55,10 +55,26 @@ const Nfttest = () => {
       // console.log( account ) ;
 
       if( !account ) return ;
-      let a = 230711 ;
-      const response = await nft_c.methods.use( a , buyId ).send({
+      let day = 230711 ;
+      await nft_c.methods.use( day , useId ).send({
         from:account,
       })
+
+      console.log( 'use!' ) ;
+
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/nft/done`,
+        {
+          day ,
+          type : Number(useId) ,
+          owner : account ,
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      );
       
     } catch (error) {
       console.error(error);
