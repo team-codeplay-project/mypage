@@ -90,10 +90,30 @@ const Nfttest = () => {
       // console.log( account ) ;
 
       if( !account ) return ;
-      let a = 230711 ;
-      const response = await nft_c.methods.refund( a , buyId ).send({
+      let day = 230711 ;
+      const response = await nft_c.methods.refund( day , reId ).send({
         from:account,
       })
+      
+      console.log( day , reId ) ;
+
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/nft`,
+        {
+          data: {
+          day ,
+          type : Number(reId) ,
+          owner : account ,
+        },
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      );
+
+      console.log( 'delete end!' ) ;
       
     } catch (error) {
       console.error(error);
