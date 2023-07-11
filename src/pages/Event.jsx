@@ -150,7 +150,7 @@ const EventPage = () => {
 
   return (
     <>
-      <div className=" shadow-md">
+      <div className="tab2-container shadow-md">
         <button
           className={`tab2 ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}
