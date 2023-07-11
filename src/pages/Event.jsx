@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import '../style/rafflebox.css';
-import axios from 'axios';
-import RaffleCard from '../components/list_rafflecard';
-import AuctionCard from '../components/list_auctioncard';
+import React, { useEffect, useState } from "react";
+import "../style/rafflebox.css";
+import axios from "axios";
+import RaffleCard from "../components/list_rafflecard";
+import AuctionCard from "../components/list_auctioncard";
 // import ReactPlayer from "react-player";
 
 const EventPage = () => {
@@ -30,7 +30,7 @@ const EventPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}/raffle`,
         {
           headers: {
-            'ngrok-skip-browser-warning': 'any',
+            "ngrok-skip-browser-warning": "any",
           },
         }
       );
@@ -49,7 +49,7 @@ const EventPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}/auction`,
         {
           headers: {
-            'ngrok-skip-browser-warning': 'any',
+            "ngrok-skip-browser-warning": "any",
           },
         }
       );
@@ -74,27 +74,27 @@ const EventPage = () => {
   const items = [
     {
       id: 1,
-      image: 'product1.jpg',
-      name: '아이템 1',
-      description: '아이템 1에 대한 설명',
+      image: "product1.jpg",
+      name: "아이템 1",
+      description: "아이템 1에 대한 설명",
     },
     {
       id: 2,
-      image: 'product2.jpg',
-      name: '아이템 2',
-      description: '아이템 2에 대한 설명',
+      image: "product2.jpg",
+      name: "아이템 2",
+      description: "아이템 2에 대한 설명",
     },
     {
       id: 3,
-      image: 'product3.jpg',
-      name: '아이템 3',
-      description: '아이템 3에 대한 설명',
+      image: "product3.jpg",
+      name: "아이템 3",
+      description: "아이템 3에 대한 설명",
     },
     {
       id: 4,
-      image: 'product4.jpg',
-      name: '아이템 4',
-      description: '아이템 4에 대한 설명',
+      image: "product4.jpg",
+      name: "아이템 4",
+      description: "아이템 4에 대한 설명",
     },
   ];
 
@@ -152,29 +152,26 @@ const EventPage = () => {
     <>
       <div className="tab2-container shadow-md">
         <button
-          className={`tab2 ${activeTab === 1 ? 'active' : ''}`}
+          className={`tab2 ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}
-          role="tab"
-        >
+          role="tab">
           래플
         </button>
         <button
-          className={`tab2 ${activeTab === 2 ? 'active' : ''}`}
+          className={`tab2 ${activeTab === 2 ? "active" : ""}`}
           onClick={() => handleTabClick(2)}
-          role="tab"
-        >
+          role="tab">
           옥션
         </button>
         <button
-          className={`tab2 ${activeTab === 3 ? 'active' : ''}`}
+          className={`tab2 ${activeTab === 3 ? "active" : ""}`}
           onClick={() => handleTabClick(3)}
-          role="tab"
-        >
+          role="tab">
           확인하기
         </button>
       </div>
 
-      <div className="product-gallery">{content}</div>
+      <div className="product-gallery min-h-[844px]">{content}</div>
 
       <div className="button-group">
         <button className="ongoing-button" onClick={ing}>

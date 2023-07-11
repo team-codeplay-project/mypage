@@ -71,8 +71,7 @@ function App() {
     <AppContext.Provider
       value={{ account, connect, chkchainID, logIn, web3, token_c, nft_c }}>
       <BrowserRouter>
-        <div>
-          {/* <div className="full-background">
+        {/* <div className="full-background">
           <ReactPlayer
             url="/Videos/Noise.mp4"
             playing={true}
@@ -86,20 +85,19 @@ function App() {
             }}
           />
         </div> */}
-          <div className="iphone-container">
-            <StatusBar />
-            <Header />
-            <Routes>
-              <Route exact path="/" element={<Homepage />} />
-              <Route path="/Ticket" element={<Ticket />} />
-              <Route path="/Event" element={<EventPage />} />
-              <Route path="/Mypage" element={<Mypage />} />
-              <Route path="/LoginPage" element={<LoginPage />} />
-              <Route path="/AdminPage" element={<AdminPage admin={admin} />} />
-              <Route path="/nft" element={<Nfttest />} />
-            </Routes>
-            <Footer />
-          </div>
+        <div className="iphone-container min-h-[844px]">
+          <StatusBar />
+          <Header />
+          <Routes>
+            <Route exact path="/" element={<Homepage />} />
+            <Route path="/Ticket" element={<Ticket />} />
+            <Route path="/Event" element={<EventPage />} />
+            <Route path="/Mypage" element={<Mypage />} />
+            <Route path="/LoginPage" element={<LoginPage />} />
+            <Route path="/AdminPage" element={<AdminPage admin={admin} />} />
+            <Route path="/nft" element={<Nfttest />} />
+          </Routes>
+          <Footer />
         </div>
       </BrowserRouter>
     </AppContext.Provider>

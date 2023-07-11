@@ -66,7 +66,7 @@ const Homepage = ({ account }) => {
           </div>
         </div>
 
-        <div className="black-shape-cotainer ">
+        <div className="black-shape-cotainer">
           <h1 className="black-shape text-white">{cardTitle2}</h1>
           <div className="icard-container">
             {popularGames.map((game, index) => (
