@@ -1,5 +1,5 @@
-export const t_addr = "0x967E29a2424D8581F8b1d282350E3E4dE70c7D7F";
-export const n_addr = "0x15186cf6FD280b5BD876850b6E93acA1D265a406";
+export const t_addr = "0xC24F95ec6a0ADC0A2727fc07b904a2CFaedE5097";
+export const n_addr = "0x1FAEB262BEa769388b6717fd603209aE8c1E651e";
 export const n_abi = [
 	{
 		"inputs": [
