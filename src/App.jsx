@@ -10,6 +10,7 @@ import Homepage from "./pages/Home";
 // import ReactPlayer from "react-player";
 import Mypage from "./pages/Mypage";
 import Ticket from "./pages/Ticket";
+import Nfttest from "./pages/Nfttest";
 import AdminPage from "./pages/Admin";
 import { n_abi, n_addr, t_abi, t_addr } from "./raffletest.config";
 import Web3 from "web3";
@@ -95,6 +96,7 @@ function App() {
               <Route path="/Mypage" element={<Mypage />} />
               <Route path="/LoginPage" element={<LoginPage />} />
               <Route path="/AdminPage" element={<AdminPage admin={admin} />} />
+              <Route path="/nft" element={<Nfttest />} />
             </Routes>
             <Footer />
           </div>

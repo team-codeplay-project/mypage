@@ -29,7 +29,7 @@ const AdminPage = ({ admin }) => {
 
       let ARdata;
 
-      if (activeTab == 1) {
+      if (activeTab === 1) {
         ARdata = "raffle";
       } else {
         ARdata = "auction";
@@ -175,7 +175,7 @@ const AdminPage = ({ admin }) => {
       let ARdata;
       setIsLoading(true);
 
-      if (activeTab == 1) {
+      if (activeTab === 1) {
         ARdata = "raffle";
       } else {
         ARdata = "auction";
