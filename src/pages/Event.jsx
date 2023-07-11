@@ -150,7 +150,7 @@ const EventPage = () => {
 
   return (
     <>
-      <div className="tab2-container shadow-md">
+      <div className=" shadow-md">
         <button
           className={`tab2 ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}
@@ -171,7 +171,7 @@ const EventPage = () => {
         </button>
       </div>
 
-      <div className="product-gallery">{content}</div>
+      <div className="product-gallery min-h-[844px]">{content}</div>
 
       <div className="button-group">
         <button className="ongoing-button" onClick={ing}>
