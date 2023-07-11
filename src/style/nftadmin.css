@@ -1,0 +1,35 @@
+/* 탭 */
+.tab4-container {
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+  transition: transform 0.3s;
+}
+
+.tab4 {
+  flex: 1;
+  padding: 6px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+  transform: translateY(0);
+}
+
+.tab4:hover {
+  color: #ffffff;
+  background-color: #000000;
+  transform: translateY(-2px);
+}
+
+.tab4.active {
+  color: #ffffff;
+  background-color: #000000;
+  transform: translateY(-2px);
+}

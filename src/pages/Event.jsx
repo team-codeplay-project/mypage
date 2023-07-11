@@ -171,7 +171,7 @@ const EventPage = () => {
         </button>
       </div>
 
-      <div className="product-gallery min-h-[844px]">{content}</div>
+      <div className="product-gallery">{content}</div>
 
       <div className="button-group">
         <button className="ongoing-button" onClick={ing}>
