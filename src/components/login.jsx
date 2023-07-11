@@ -1,47 +1,68 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/login.css";
+import axios from "axios";
+import { AppContext } from "../App";
 
 const LoginPage = ({ handleLogin }) => {
   const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
+  const { account } = useContext( AppContext ) ;
 
-  const handleNicknameChange = (event) => {
-    setNickname(event.target.value);
-  };
+  const Userinsert = async(e) => {
 
-  const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
+    e.preventDefault();
 
-  const handleLoginButtonClick = () => {
-    if (nickname && phone) {
-      handleLogin(nickname);
-      navigate("/");
+    try {
+
+      if( !account || !phone || !nickname ){
+        console.log( "plus input" ) ;
+      return ;
+      }
+
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/user/`,
+        {
+          phone_number : phone,
+          address : account ,
+          name : nickname ,
+        },
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      );
+
+      console.log( 'create user' ) ;
+      
+    } catch (error) {
+     console.error(error); 
     }
-  };
+
+  }
 
   return (
     <div className="login-container">
       <h1 className="title">로그인</h1>
+      <form onSubmit={Userinsert} className="flex flex-col">
       <input
         type="text"
         placeholder="닉네임"
         value={nickname}
-        onChange={handleNicknameChange}
+        onChange={(e)=>setNickname(e.target.value)}
         className="input-field"
       />
       <input
         type="tel"
         placeholder="휴대폰 번호"
         value={phone}
-        onChange={handlePhoneChange}
+        onChange={(e)=>setPhone(e.target.value)}
         className="input-field"
       />
-      <button className="login-button" onClick={handleLoginButtonClick}>
-        로그인
-      </button>
+      <input type ="submit" value ="회원 가입" />
+      </form>
     </div>
   );
 };
