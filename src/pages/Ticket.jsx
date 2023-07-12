@@ -6,37 +6,43 @@ import { BiBaseball } from "react-icons/bi";
 import { TbSection } from "react-icons/tb";
 import { LuArmchair } from "react-icons/lu";
 
-const SelectedSeatsCard = ({ seats, onConfirm }) => {
+const SelectedSeatsCard = ({ seats }) => {
   return (
     <div className="selected-seats-card">
       <div className="selected-seats">
         <ul>
-          {seats.map((seat) => (
-            <li key={seat}>{seat}</li>
-          ))}
+          {seats.map((seat) => {
+            const row = seat.substring(0, 1);
+            const column = seat.substring(1);
+            const formattedSeat = `${parseInt(row)}-${parseInt(column)}`;
+
+            return <li key={seat}>{formattedSeat}</li>;
+          })}
         </ul>
       </div>
     </div>
   );
 };
 
-const SeatSelectionContainer = ({ onClose, onConfirm }) => {
+const SeatSelectionContainer = ({ onConfirm }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [ticketQuantity, setTicketQuantity] = useState(1);
 
   const handleSeatSelection = (row, seat) => {
-    const seatKey = `${row}-${seat}`;
+    const seatKey = `${row}${seat}`;
     const isSelected = selectedSeats.includes(seatKey);
 
     if (isSelected) {
       const updatedSeats = selectedSeats.filter((seat) => seat !== seatKey);
       setSelectedSeats(updatedSeats);
+      setTicketQuantity(0);
     } else {
-      const updatedSeats = [...selectedSeats, seatKey];
-      setSelectedSeats(updatedSeats);
+      if (selectedSeats.length < 1) {
+        const updatedSeats = [...selectedSeats, seatKey];
+        setSelectedSeats(updatedSeats);
+        setTicketQuantity(1);
+      }
     }
-
-    setTicketQuantity(selectedSeats.length + (isSelected ? -1 : 1));
   };
 
   const handleConfirmBooking = () => {
@@ -59,7 +65,9 @@ const SeatSelectionContainer = ({ onClose, onConfirm }) => {
       const rowSeats = [];
 
       for (let seat = 1; seat <= seats; seat++) {
-        const seatKey = `${row}-${seat}`;
+        const seatNumber = seat.toString().padStart(2, "0");
+
+        const seatKey = `${row}${seatNumber}`;
         const isSelected = selectedSeats.includes(seatKey);
 
         let blank = 0;
@@ -71,11 +79,15 @@ const SeatSelectionContainer = ({ onClose, onConfirm }) => {
           <div
             key={seatKey}
             className={`seat ml-4 ${isSelected ? "selected" : ""}`}
-            style={{ marginLeft: blank }}
-            onClick={() => handleSeatSelection(row, seat)}></div>
+            style={{
+              marginLeft: blank,
+              color: "transparent",
+            }}
+            onClick={() => handleSeatSelection(row, seatNumber)}>
+            {seatNumber.length > 2 ? seatNumber : `5${seatNumber}`}{" "}
+          </div>
         );
       }
-
       return (
         <div key={`row-${row}`} className="row">
           {rowSeats}
@@ -91,23 +103,12 @@ const SeatSelectionContainer = ({ onClose, onConfirm }) => {
           <div className="seat-map">{renderSeatMap()}</div>
         </div>
         <div className="booking-container">
-          <div className="ticket-quantity">
-            <input
-              type="number"
-              min="1"
-              value={ticketQuantity}
-              onChange={handleTicketQuantityChange}
-            />
-          </div>
           {selectedSeats.length > 0 && (
-            <SelectedSeatsCard
-              seats={selectedSeats}
-              onConfirm={handleConfirmBooking}
-            />
+            <SelectedSeatsCard seats={selectedSeats} />
           )}
         </div>
-        <button className="close-button" onClick={onClose}>
-          확인
+        <button className="book-button" onClick={handleConfirmBooking}>
+          예매하기
         </button>
       </div>
     </div>
@@ -239,7 +240,6 @@ const TicketBooking = () => {
                   {showSeatSelection && (
                     <div className="modal-overlay">
                       <SeatSelectionContainer
-                        onClose={handleSeatSelectionClose}
                         onConfirm={handleConfirmBooking}
                       />
                     </div>
@@ -254,10 +254,6 @@ const TicketBooking = () => {
             </div>
           </div>
         )}
-
-        <button className="book-button" onClick={handleBooking}>
-          예매하기
-        </button>
       </div>
     </div>
   );
