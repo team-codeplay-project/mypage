@@ -22,6 +22,9 @@ const admin = "0x1f6D70acBd7B09096717fd5625783F78AF685A5a";
 function App() {
   const [account, setAccount] = useState("");
   const [logIn, setLogIn] = useState(false);
+  const [ mytoken , setMytoken ] = useState(0) ;
+  const [ mynft , setMynft ] = useState(0) ;
+  
 
   const web3 = new Web3(window.ethereum);
   const token_c = new web3.eth.Contract(t_abi, t_addr);
@@ -34,7 +37,17 @@ function App() {
       });
 
       setAccount(accounts[0]);
+      chkchainID() ;
       setLogIn(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const disconnect = async () => {
+    try {
+      setAccount();
+      setLogIn(false);
     } catch (error) {
       console.error(error);
     }
@@ -62,29 +75,31 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    connect();
-    chkchainID();
-  }, []);
+  const getbalance = async() => {
+    try {
+
+      setMynft( -1 ) ;
+      const nft_b = await nft_c.methods.balanceOf( account ).call() ;
+      const token_b = await token_c.methods.balanceOf( account ).call() ;
+      setMynft( Number(nft_b) ) ;
+      setMytoken( Number(token_b) ) ;
+
+    } catch (error) {
+      console.error( error ) ;
+    }
+
+  }
+
+  useEffect( () => {
+    if( account ) {
+      getbalance() ;
+    }
+  } ,[account] ) ;
 
   return (
     <AppContext.Provider
-      value={{ account, connect, chkchainID, logIn , setLogIn , web3, token_c, nft_c }}>
+      value={{ getbalance , account , connect, chkchainID, logIn , disconnect , web3, token_c, nft_c , mynft , mytoken } }>
       <BrowserRouter>
-        {/* <div className="full-background">
-          <ReactPlayer
-            url="/Videos/Noise.mp4"
-            playing={true}
-            loop={true}
-            muted={true}
-            style={{
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        </div> */}
         <div className="iphone-container min-h-[844px]">
           <StatusBar />
           <Header />

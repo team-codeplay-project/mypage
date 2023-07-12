@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import {
   MdOutlineAddCard,
@@ -8,35 +8,23 @@ import {
 import { CgCloseR } from "react-icons/cg";
 import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import { AppContext } from "../App";
 
-const Header = ({ account, setAccount }) => {
-  const [isCardConnected, setIsCardConnected] = useState(false);
-  const [connectedAccount, setConnectedAccount] = useState(null);
+const Header = () => {
+  
+  const { logIn , account , connect , disconnect , mynft , mytoken } = useContext(AppContext);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
-  const connectAccount = async () => {
-    if (isCardConnected) {
-      setIsCardConnected(false);
-      setConnectedAccount(null);
-    } else {
-      try {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-
-        setIsCardConnected(true);
-        setConnectedAccount(accounts[0]);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  const login = () => {
+    connect() ;
   };
 
-  const toggleCardConnection = () => {
-    connectAccount();
-  };
+  const logout = () => {
+    disconnect();
+  }
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -48,10 +36,6 @@ const Header = ({ account, setAccount }) => {
 
   const clearSearchInput = () => {
     setSearchValue("");
-  };
-
-  const handleLogin = (user) => {
-    setLoggedInUser(user);
   };
 
   return (
@@ -82,26 +66,30 @@ const Header = ({ account, setAccount }) => {
             </div>
           )}
         </div>
-        {isCardConnected ? (
+        {logIn ? (
           <div className="connected-account">
             <MdCreditCard
               className="header-icon card-icon"
-              size={34}
+              size={40}
               color="#007aff"
-              onClick={toggleCardConnection}
+              onClick={logout}
               style={{ marginTop: "2.5px" }}
             />
           </div>
         ) : (
+          <div>
           <MdOutlineAddCard
             className="header-icon card-icon"
-            size={34}
-            onClick={toggleCardConnection}
+            size={40}
+            onClick={login}
           />
+          </div>
+          
         )}
         <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
           <GrClose className="close-icon2" size={20} onClick={toggleMenu} />
-          {loggedInUser ? (
+          {logIn ? (
+            <div>
             <span
               className="welcome-message"
               style={{
@@ -110,19 +98,21 @@ const Header = ({ account, setAccount }) => {
               }}>
               {`${loggedInUser} 님`}
             </span>
+            <ul className="menu-items">
+              { mynft === -1 ? ( <li>loading~~</li> )
+              : (
+                <div>
+              <li className="menu-item">티켓 수 : {mynft} : 토큰 수 : {mytoken}</li>
+              <li className="menu-item">MY 티켓</li>
+              <li className="menu-item">MY 정보</li>
+              </div>
+              )
+              }
+            </ul>
+            </div>
           ) : (
-            <Link to="/login" className="login-link">
-              로그인
-              <Link to="/login" className="login-link-icon">
-                <MdOutlineArrowForwardIos size={20} />
-              </Link>
-            </Link>
+            <div className="login-link" onClick={login}>로그인</div>
           )}
-          <ul className="menu-items">
-            <li className="menu-item">MY 티켓</li>
-            <li className="menu-item">MY 잔고</li>
-            <li className="menu-item">MY 정보</li>
-          </ul>
         </div>
       </div>
     </header>

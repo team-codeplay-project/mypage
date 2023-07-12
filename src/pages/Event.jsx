@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../style/rafflebox.css";
 import axios from "axios";
 import RaffleCard from "../components/list_rafflecard";
 import AuctionCard from "../components/list_auctioncard";
+import { AppContext } from "../App";
 
 const EventPage = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setdata] = useState();
   const [toggle, setToggle] = useState(false);
+  const { logIn , account , getbalance } = useContext(AppContext);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
@@ -59,6 +61,14 @@ const EventPage = () => {
       get_Auction_Data();
     }
   }, [activeTab]);
+
+ 
+  useEffect(() => {
+    if( !account ){
+
+    }
+    getbalance() ;
+  } , [] ) ;
 
   let content;
   let buttonGroup = null;

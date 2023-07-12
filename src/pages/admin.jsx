@@ -2,12 +2,12 @@ import axios from "axios";
 import "../style/admin.css";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
-import { useNavigate } from "react-router-dom";
 
 const chk = {};
 let a_idx,
   max = -1;
 const AdminPage = ({ admin }) => {
+  
   const [activeTab, setActiveTab] = useState(1);
   const [data, setData] = useState();
   const [Goods_url, setUrl] = useState();
@@ -16,7 +16,7 @@ const AdminPage = ({ admin }) => {
   const [n, setN] = useState();
   const [E, setE] = useState();
   const { token_c, web3, account } = useContext(AppContext);
-  const navigate = useNavigate();
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const handleTabClick = (tabIndex) => {
@@ -197,9 +197,6 @@ const AdminPage = ({ admin }) => {
   };
 
   useEffect(() => {
-    if (account !== admin) {
-      //  navigate("/");
-    }
     get_Data();
   }, [activeTab]);
 
