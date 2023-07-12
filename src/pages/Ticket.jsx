@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../style/booking.css";
-// import "../style/seatselect.css";
+import "../style/seatselect.css";
 import Dropdown from "react-dropdown-select";
 import { BiBaseball } from "react-icons/bi";
+import { TbSection } from "react-icons/tb";
 import { LuArmchair } from "react-icons/lu";
 
 const SelectedSeatsCard = ({ seats, onConfirm }) => {
@@ -19,7 +20,7 @@ const SelectedSeatsCard = ({ seats, onConfirm }) => {
   );
 };
 
-const SeatSelectionPage = ({ onClose, onConfirm }) => {
+const SeatSelectionContainer = ({ onClose, onConfirm }) => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [ticketQuantity, setTicketQuantity] = useState(1);
 
@@ -84,8 +85,8 @@ const SeatSelectionPage = ({ onClose, onConfirm }) => {
   };
 
   return (
-    <div className="combine-card">
-      <div className="seat-selection-page">
+    <div className="seat-selection-modal">
+      <div className="seat-selection-container">
         <div className="seat-container">
           <div className="seat-map">{renderSeatMap()}</div>
         </div>
@@ -106,7 +107,7 @@ const SeatSelectionPage = ({ onClose, onConfirm }) => {
           )}
         </div>
         <button className="close-button" onClick={onClose}>
-          닫기
+          확인
         </button>
       </div>
     </div>
@@ -114,23 +115,17 @@ const SeatSelectionPage = ({ onClose, onConfirm }) => {
 };
 
 const TicketBooking = () => {
-  const tickets = ["티켓1", "티켓2", "티켓3"];
+  const tickets = ["두산 : 롯데", "LG 트윈스 : 기아"];
   const seatSections = [
     {
       value: "테이블석",
       label: "테이블석",
-      options: [
-        { value: "1루 테이블석", label: "1루 테이블석" },
-        { value: "3루 테이블석", label: "3루 테이블석" },
-      ],
+      options: [{ value: "1루 테이블석", label: "1루 테이블석" }],
     },
     {
       value: "네이비석",
       label: "네이비석",
-      options: [
-        { value: "1루 네이비석", label: "1루 네이비석" },
-        { value: "3루 네이비석", label: "3루 네이비석" },
-      ],
+      options: [{ value: "1루 네이비석", label: "1루 네이비석" }],
     },
     {
       value: "익사이팅존",
@@ -205,7 +200,7 @@ const TicketBooking = () => {
 
         <div className="section2">
           <h3 className="section2-title">
-            <LuArmchair className="section2-icon" />
+            <TbSection className="section2-icon" />
             구역
           </h3>
           <div className="seat-select">
@@ -241,18 +236,19 @@ const TicketBooking = () => {
               />
               {selectedSeat === "1루 테이블석" && (
                 <>
-                  {showSeatSelection ? (
-                    <SeatSelectionPage
-                      onClose={handleSeatSelectionClose}
-                      onConfirm={handleConfirmBooking}
-                    />
-                  ) : (
-                    <button
-                      className="seat-selection-button"
-                      onClick={handleSeatSelectionClick}>
-                      좌석 선택하기
-                    </button>
+                  {showSeatSelection && (
+                    <div className="modal-overlay">
+                      <SeatSelectionContainer
+                        onClose={handleSeatSelectionClose}
+                        onConfirm={handleConfirmBooking}
+                      />
+                    </div>
                   )}
+                  <button
+                    className="seat-selection-button"
+                    onClick={handleSeatSelectionClick}>
+                    좌석 선택하기
+                  </button>
                 </>
               )}
             </div>

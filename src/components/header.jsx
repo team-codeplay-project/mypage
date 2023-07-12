@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { IoSearchCircle } from "react-icons/io5";
 import {
   MdOutlineAddCard,
   MdCreditCard,
@@ -11,15 +10,11 @@ import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 
 const Header = ({ account, setAccount }) => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCardConnected, setIsCardConnected] = useState(false);
   const [connectedAccount, setConnectedAccount] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
-  const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-  };
+  const [searchValue, setSearchValue] = useState("");
 
   const connectAccount = async () => {
     if (isCardConnected) {
@@ -47,8 +42,14 @@ const Header = ({ account, setAccount }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  //Login 페이지에서 사용자가 성공적으로 로그인하면, handleLoginButtonClick 함수에서 페이지 이동 통해 Header 컴포넌트의 loggedInUser 상태 업데이트.
-  // handleLogin 함수를 Login 컴포넌트에서 받아와 사용, 로그인이 성공했을시 handleLogin 함수 호출
+  const handleSearchInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const clearSearchInput = () => {
+    setSearchValue("");
+  };
+
   const handleLogin = (user) => {
     setLoggedInUser(user);
   };
@@ -64,49 +65,37 @@ const Header = ({ account, setAccount }) => {
         />
       </div>
       <div className="header-content">
-        {!isSearchOpen ? (
-          <IoSearchCircle
-            className="header-icon"
-            size={34}
-            onClick={toggleSearch}
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="검색어를 입력하세요."
+            value={searchValue}
+            onChange={handleSearchInputChange}
           />
-        ) : (
-          <div className="search-container">
-            <input type="text" placeholder="검색" />
+          {searchValue && (
             <div className="close-icon-container">
               <CgCloseR
                 className="close-icon"
                 size={15}
-                onClick={toggleSearch}
+                onClick={clearSearchInput}
               />
             </div>
-          </div>
-        )}
+          )}
+        </div>
         {isCardConnected ? (
           <div className="connected-account">
             <MdCreditCard
               className="header-icon card-icon"
-              size={30}
+              size={34}
               color="#007aff"
               onClick={toggleCardConnection}
-              style={{ marginTop: "2px" }}
+              style={{ marginTop: "2.5px" }}
             />
-            <span
-              className="account-digits"
-              style={{
-                fontSize: "10px",
-                color: "#007aff",
-                display: "block",
-                marginTop: "-6px",
-                marginLeft: "16px",
-              }}>
-              {connectedAccount?.slice(-4)}
-            </span>
           </div>
         ) : (
           <MdOutlineAddCard
             className="header-icon card-icon"
-            size={30}
+            size={34}
             onClick={toggleCardConnection}
           />
         )}

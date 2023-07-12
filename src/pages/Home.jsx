@@ -49,7 +49,7 @@ const Homepage = ({ account }) => {
       <div className="black-shape-cotainer">
         <div className="black-shape text-white ">{cardTitle}</div>
         <div className="home-gallery">
-          <div className="ticket-gallery mt-5 mb-5">
+          <div className="ticket-gallery mt-6 mb-6">
             <div className="gallery-container">
               {tickets.map((ticket, index) => (
                 <div className="ticket-box" key={index}>

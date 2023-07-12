@@ -3,21 +3,12 @@ import "../style/rafflebox.css";
 import axios from "axios";
 import RaffleCard from "../components/list_rafflecard";
 import AuctionCard from "../components/list_auctioncard";
-// import ReactPlayer from "react-player";
 
 const EventPage = () => {
   const [activeTab, setActiveTab] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setdata] = useState();
   const [toggle, setToggle] = useState(false);
-
-  const ing = () => {
-    setToggle(false);
-  };
-
-  const end = () => {
-    setToggle(true);
-  };
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
@@ -70,6 +61,7 @@ const EventPage = () => {
   }, [activeTab]);
 
   let content;
+  let buttonGroup = null;
 
   const items = [
     {
@@ -96,6 +88,12 @@ const EventPage = () => {
       name: "아이템 4",
       description: "아이템 4에 대한 설명",
     },
+    {
+      id: 5,
+      image: "product5.jpg",
+      name: "아이템 5",
+      description: "아이템 5에 대한 설명",
+    },
   ];
 
   if (activeTab === 1) {
@@ -113,6 +111,16 @@ const EventPage = () => {
         )}
       </div>
     );
+    buttonGroup = (
+      <div className="button-group">
+        <button className="ongoing-button" onClick={() => setToggle(false)}>
+          진행중
+        </button>
+        <button className="completed-button" onClick={() => setToggle(true)}>
+          마감
+        </button>
+      </div>
+    );
   } else if (activeTab === 2) {
     content = (
       <div className="product-container2">
@@ -128,9 +136,19 @@ const EventPage = () => {
         )}
       </div>
     );
+    buttonGroup = (
+      <div className="button-group">
+        <button className="ongoing-button" onClick={() => setToggle(false)}>
+          진행중
+        </button>
+        <button className="completed-button" onClick={() => setToggle(true)}>
+          마감
+        </button>
+      </div>
+    );
   } else if (activeTab === 3) {
     content = (
-      <div className="item-list">
+      <div>
         {items.map((item) => (
           <div className="item-box" key={item.id}>
             <div className="item">
@@ -173,14 +191,7 @@ const EventPage = () => {
 
       <div className="product-gallery min-h-[844px]">{content}</div>
 
-      <div className="button-group">
-        <button className="ongoing-button" onClick={ing}>
-          진행중
-        </button>
-        <button className="completed-button" onClick={end}>
-          마감
-        </button>
-      </div>
+      {buttonGroup}
     </>
   );
 };
