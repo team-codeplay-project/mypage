@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import {
   MdOutlineAddCard,
@@ -9,10 +9,11 @@ import { CgCloseR } from "react-icons/cg";
 import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { AppContext } from "../App";
+import axios from "axios";
 
 const Header = () => {
   
-  const { account , setAccount , mynft , mytoken } = useContext(AppContext);
+  const { account , setAccount , mynft , mytoken , getbalance } = useContext(AppContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -25,7 +26,10 @@ const Header = () => {
       });
 
       // await 
-      setAccount(accounts[0]);
+      const user = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/user/${accounts[0]}`
+      );
+      setAccount(user.data.user);
       chkchainID() ;
     } catch (error) {
       console.error(error);
@@ -39,6 +43,12 @@ const Header = () => {
       console.error(error);
     }
   };
+
+  useEffect( () => {
+    if( account ) {
+      getbalance();
+    }
+  } ,[account] ) ;
 
   const chkchainID = async () => {
     try {
@@ -132,7 +142,7 @@ const Header = () => {
                 fontSize: "24px",
                 fontWeight: "bold",
               }}>
-              {`${loggedInUser} 님`}
+              {`${account.name} 님`}
             </span>
             <ul className="menu-items">
               { mynft === -1 ? ( <li>loading~~</li> )

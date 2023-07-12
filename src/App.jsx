@@ -31,8 +31,8 @@ function App() {
     try {
 
       setMynft( -1 ) ;
-      const nft_b = await nft_c.methods.balanceOf( account ).call() ;
-      const token_b = await token_c.methods.balanceOf( account ).call() ;
+      const nft_b = await nft_c.methods.balanceOf( account.address ).call() ;
+      const token_b = await token_c.methods.balanceOf( account.address ).call() ;
       setMynft( Number(nft_b) ) ;
       setMytoken( Number(token_b) ) ;
 
@@ -41,12 +41,6 @@ function App() {
     }
 
   }
-
-  useEffect( () => {
-    if( account ) {
-      getbalance() ;
-    }
-  } ,[account] ) ;
 
   return (
     <AppContext.Provider

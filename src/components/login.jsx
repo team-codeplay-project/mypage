@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../style/login.css";
 import axios from "axios";
 import { AppContext } from "../App";
@@ -7,7 +6,6 @@ import { AppContext } from "../App";
 const LoginPage = ({ handleLogin }) => {
   const [nickname, setNickname] = useState("");
   const [phone, setPhone] = useState("");
-  const navigate = useNavigate();
   const { account } = useContext( AppContext ) ;
 
   const Userinsert = async(e) => {
@@ -18,7 +16,13 @@ const LoginPage = ({ handleLogin }) => {
 
       if( !account || !phone || !nickname ){
         console.log( "plus input" ) ;
+        // 입력이 필요합니다 팝업 or 안내문
       return ;
+      }
+
+      if( isNaN(phone) ){
+        console.log( "전화번호는 숫자여야함");
+        return ;
       }
 
       await axios.post(
@@ -38,7 +42,8 @@ const LoginPage = ({ handleLogin }) => {
       console.log( 'create user' ) ;
       
     } catch (error) {
-     console.error(error); 
+     console.error(error);
+     // 여기도 팝업 ex : 이미 존재하는 전화번호입니다.
     }
 
   }
