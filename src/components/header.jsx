@@ -12,19 +12,55 @@ import { AppContext } from "../App";
 
 const Header = () => {
   
-  const { logIn , account , connect , disconnect , mynft , mytoken } = useContext(AppContext);
+  const { account , setAccount , mynft , mytoken } = useContext(AppContext);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
-  const login = () => {
-    connect() ;
+  const connect = async () => {
+    try {
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      // await 
+      setAccount(accounts[0]);
+      chkchainID() ;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const logout = () => {
-    disconnect();
-  }
+  const disconnect = async () => {
+    try {
+      setAccount();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const chkchainID = async () => {
+    try {
+      const id = await window.ethereum.request({
+        method: "eth_chainId",
+        params: [],
+      });
+
+      if (id !== 0x5) {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [
+            {
+              chainId: "0x5",
+            },
+          ],
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -66,13 +102,13 @@ const Header = () => {
             </div>
           )}
         </div>
-        {logIn ? (
+        {account ? (
           <div className="connected-account">
             <MdCreditCard
               className="header-icon card-icon"
               size={40}
               color="#007aff"
-              onClick={logout}
+              onClick={disconnect}
               style={{ marginTop: "2.5px" }}
             />
           </div>
@@ -81,14 +117,14 @@ const Header = () => {
           <MdOutlineAddCard
             className="header-icon card-icon"
             size={40}
-            onClick={login}
+            onClick={connect}
           />
           </div>
           
         )}
         <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
           <GrClose className="close-icon2" size={20} onClick={toggleMenu} />
-          {logIn ? (
+          {account ? (
             <div>
             <span
               className="welcome-message"
@@ -111,7 +147,7 @@ const Header = () => {
             </ul>
             </div>
           ) : (
-            <div className="login-link" onClick={login}>로그인</div>
+            <div className="login-link" onClick={connect}>로그인</div>
           )}
         </div>
       </div>

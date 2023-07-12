@@ -10,7 +10,7 @@ const EventPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setdata] = useState();
   const [toggle, setToggle] = useState(false);
-  const { logIn , account , getbalance } = useContext(AppContext);
+  const { account , getbalance } = useContext(AppContext);
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);

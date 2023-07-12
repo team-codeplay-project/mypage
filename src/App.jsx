@@ -20,60 +20,12 @@ export const AppContext = createContext();
 
 const admin = "0x1f6D70acBd7B09096717fd5625783F78AF685A5a";
 function App() {
-  const [account, setAccount] = useState("");
-  const [logIn, setLogIn] = useState(false);
+  const [account, setAccount] = useState();
   const [ mytoken , setMytoken ] = useState(0) ;
   const [ mynft , setMynft ] = useState(0) ;
-  
-
   const web3 = new Web3(window.ethereum);
   const token_c = new web3.eth.Contract(t_abi, t_addr);
   const nft_c = new web3.eth.Contract(n_abi, n_addr);
-
-  const connect = async () => {
-    try {
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      setAccount(accounts[0]);
-      chkchainID() ;
-      setLogIn(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const disconnect = async () => {
-    try {
-      setAccount();
-      setLogIn(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const chkchainID = async () => {
-    try {
-      const id = await window.ethereum.request({
-        method: "eth_chainId",
-        params: [],
-      });
-
-      if (id !== 0x5) {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [
-            {
-              chainId: "0x5",
-            },
-          ],
-        });
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const getbalance = async() => {
     try {
@@ -98,7 +50,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ getbalance , account , connect, chkchainID, logIn , disconnect , web3, token_c, nft_c , mynft , mytoken } }>
+      value={{ account , setAccount , mynft , mytoken , getbalance , web3, token_c, nft_c } }>
       <BrowserRouter>
         <div className="iphone-container min-h-[844px]">
           <StatusBar />
