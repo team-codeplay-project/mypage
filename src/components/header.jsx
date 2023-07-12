@@ -28,6 +28,12 @@ const Header = () => {
       // await 
       const user = await axios.get(
         `${process.env.REACT_APP_BACKEND_URL}/user/${accounts[0]}`
+        ,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
       );
       setAccount(user.data.user);
       chkchainID() ;
