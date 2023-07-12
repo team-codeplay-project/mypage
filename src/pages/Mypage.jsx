@@ -1,12 +1,55 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from "react";
 import "../style/mypage.css";
+import axios from "axios";
 
 const Mypage = () => {
   const [activeTab, setActiveTab] = useState(1);
+  const [nfts, setNfts] = useState();
+  const [raffles, setRaffles] = useState();
 
   const handleTabClick = (tabIndex) => {
     setActiveTab(tabIndex);
   };
+
+  const getNft = async () => {
+    const response = await axios.get(
+      `${process.env.REACT_APP_BACKEND_URL}/nft/`,
+      {
+        headers: {
+          "ngrok-skip-browser-warning": "any",
+        },
+      }
+    );
+    console.log(response);
+    console.log(response.data[1].createdAt);
+    setNfts(response.data);
+  };
+
+  useEffect(() => {
+    getNft();
+  }, []);
+
+  const getRaffle = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/nft/2`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": "any",
+          },
+        }
+      );
+      console.log(response);
+      console.log(response.data.createdAt);
+      setRaffles(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getRaffle();
+  }, []);
 
   return (
     <>
@@ -14,19 +57,22 @@ const Mypage = () => {
         <button
           className={`tab3 ${activeTab === 1 ? "active" : ""}`}
           onClick={() => handleTabClick(1)}
-          role="tab">
+          role="tab"
+        >
           사용전
         </button>
         <button
           className={`tab3 ${activeTab === 2 ? "active" : ""}`}
           onClick={() => handleTabClick(2)}
-          role="tab">
+          role="tab"
+        >
           사용완료
         </button>
         <button
           className={`tab3 ${activeTab === 3 ? "active" : ""}`}
           onClick={() => handleTabClick(3)}
-          role="tab">
+          role="tab"
+        >
           내 토큰
         </button>
       </div>
@@ -37,51 +83,40 @@ const Mypage = () => {
               {activeTab === 1 && (
                 <div>
                   <div className="nft-list">
-                    <div className="nft-item">
-                      <img src="nft1.png" alt="NFT 1" />
-                      <div className="nft-overlay">
-                        <span>경기 1</span>
-                      </div>
-                    </div>
-                    <div className="nft-item">
-                      <img src="nft2.png" alt="NFT 2" />
-                      <div className="nft-overlay">
-                        <span>경기 2</span>
-                      </div>
-                    </div>
-                    <div className="nft-item">
-                      <img src="nft3.png" alt="NFT 3" />
-                      <div className="nft-overlay">
-                        <span>경기 3</span>
-                      </div>
-                    </div>
+                    {nfts?.map((v, i) => {
+                      if (v.isUsed) return;
+
+                      return (
+                        <div key={i} className="nft-item">
+                          <img src="nft1.png" alt="NFT 1" />
+                          <div className="nft-overlay">
+                            <span>경기 {v.id}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
               {activeTab === 2 && (
                 <div>
                   <div className="nft-list">
-                    <div className="nft-item">
-                      <img src="nft4.png" alt="NFT 4" />
-                      <div className="nft-overlay">
-                        <span>경기 4</span>
-                      </div>
-                    </div>
-                    <div className="nft-item">
-                      <img src="nft5.png" alt="NFT 5" />
-                      <div className="nft-overlay">
-                        <span>경기 5</span>
-                      </div>
-                    </div>
-                    <div className="nft-item">
-                      <img src="nft6.png" alt="NFT 6" />
-                      <div className="nft-overlay">
-                        <span>경기 6</span>
-                      </div>
-                    </div>
+                    {nfts?.map((v, i) => {
+                      if (!v.isUsed) return;
+
+                      return (
+                        <div key={i} className="nft-item">
+                          <img src="nft4.png" alt="NFT 4" />
+                          <div className="nft-overlay">
+                            <span>경기 {v.id}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
+
               {activeTab === 3 && (
                 <div>
                   <h2>보유 토큰</h2>
