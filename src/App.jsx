@@ -69,7 +69,7 @@ function App() {
 
   return (
     <AppContext.Provider
-      value={{ account, connect, chkchainID, logIn, web3, token_c, nft_c }}>
+      value={{ account, connect, chkchainID, logIn , setLogIn , web3, token_c, nft_c }}>
       <BrowserRouter>
         {/* <div className="full-background">
           <ReactPlayer

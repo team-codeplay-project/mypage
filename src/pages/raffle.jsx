@@ -6,7 +6,7 @@ import axios from 'axios';
 const Raffle = () => {
   const [chkscreen, setChkScreen] = useState(false);
   const [isLoading, setIsLoading] = useState(0);
-  const { account, chkchainID, contract } = useContext(AppContext);
+  const { account, chkchainID, token_c } = useContext(AppContext);
   const { r_idx } = useParams();
 
   const get_R_data = async () => {
@@ -21,7 +21,7 @@ const Raffle = () => {
         setChkScreen(2);
       } else {
         const f_B = response.data.start_block; // fromBlock : 은 디비에서
-        const a = await contract.getPastEvents('Raffle', {
+        const a = await token_c.getPastEvents('Raffle', {
           filter: { _idx: r_idx },
           fromBlock: f_B,
           toBlock: 'latest',
@@ -46,7 +46,7 @@ const Raffle = () => {
   const onclickRaffle_participate = async () => {
     setIsLoading(true);
     try {
-      await contract.methods.Raffle_participate(r_idx).send({ from: account });
+      await token_c.methods.Raffle_participate(r_idx).send({ from: account });
       get_R_data();
     } catch (error) {
       setIsLoading(false);
